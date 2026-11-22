@@ -1,0 +1,38 @@
+{
+	"name": "andrewsunada.com",
+	"private": true,
+	"version": "1.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --fail-on-warnings",
+		"lint": "eslint .",
+		"test": "vitest run",
+		"verify": "npm run check && npm run lint && npm run test && npm run build"
+	},
+	"devDependencies": {
+		"@eslint/js": "^10.0.1",
+		"@sveltejs/adapter-static": "^3.0.11",
+		"@sveltejs/enhanced-img": "^1.0.1",
+		"@sveltejs/kit": "^2.70.4",
+		"@sveltejs/vite-plugin-svelte": "^7.3.1",
+		"@testing-library/jest-dom": "^8.0.0",
+		"@testing-library/svelte": "^5.4.2",
+		"@testing-library/user-event": "^14.6.13",
+		"@types/node": "^26.6.6",
+		"eslint": "^10.15.0",
+		"eslint-plugin-svelte": "^3.24.1",
+		"globals": "^17.14.0",
+		"jsdom": "^29.1.1",
+		"sass-embedded": "^1.108.2",
+		"svelte": "^5.59.1",
+		"svelte-check": "^4.7.8",
+		"tsx": "^4.23.15",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.73.0",
+		"vite": "^8.3.8",
+		"vitest": "^5.1.1"
+	}
+}

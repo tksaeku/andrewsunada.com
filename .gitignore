@@ -1,0 +1,10 @@
+.DS_Store
+docs/research/
+assets/photos/
+.superpowers/
+node_modules/
+build/
+.svelte-kit/
+.env*
+!.env.example
+.DS_Store
