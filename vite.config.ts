@@ -7,6 +7,7 @@ import { defineConfig } from 'vitest/config';
 const stylesDirectory = fileURLToPath(new URL('./src/lib/styles', import.meta.url));
 
 export default defineConfig({
+	envPrefix: ['VITE_', 'PUBLIC_'],
 	plugins: [enhancedImages(), sveltekit(), svelteTesting()],
 	css: {
 		preprocessorOptions: {

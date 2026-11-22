@@ -28,7 +28,14 @@ export type Workshop = { slug: string; title: string; level: string; outline: st
 
 export type Drill = { title: string; topic: string; description: string };
 
-export type Video = { youtubeId: string; title: string; event: string; year: number; isFeatured: boolean };
+export type Video = {
+	youtubeId: string;
+	title: string;
+	event: string;
+	year: number;
+	uploadedAt: string;
+	isFeatured: boolean;
+};
 
 export type Placement = { event: string; year: number; division: string; place: number };
 

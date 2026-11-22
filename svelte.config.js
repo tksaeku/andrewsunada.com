@@ -14,6 +14,7 @@ const config = {
 		prerender: {
 			handleHttpError: 'fail',
 			handleMissingId: 'fail',
+			entries: ['*', '/404', '/sitemap.xml', '/robots.txt', '/llms.txt'],
 		},
 	},
 };
