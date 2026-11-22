@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    name: Check, test and build
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_CONTACT_FORM_ENDPOINT: ${{ vars.PUBLIC_CONTACT_FORM_ENDPOINT }}
+      PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
+      PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ vars.PUBLIC_GOOGLE_SITE_VERIFICATION }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+      - name: Keep the verified build for deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: build/
+          include-hidden-files: true
+          retention-days: 7
+
+  deploy:
+    name: Deploy to DreamHost
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: build/
+      - name: Configure SSH with the pinned host key
+        env:
+          DREAMHOST_SSH_KEY: ${{ secrets.DREAMHOST_SSH_KEY }}
+          DREAMHOST_KNOWN_HOSTS: ${{ secrets.DREAMHOST_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DREAMHOST_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DREAMHOST_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+      - name: Copy the site with rsync
+        env:
+          DREAMHOST_HOST: ${{ secrets.DREAMHOST_HOST }}
+          DREAMHOST_USER: ${{ secrets.DREAMHOST_USER }}
+          DREAMHOST_PATH: ${{ secrets.DREAMHOST_PATH }}
+        run: |
+          for name in DREAMHOST_HOST DREAMHOST_USER DREAMHOST_PATH; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Secret $name is not set"
+              exit 1
+            fi
+          done
+          case "$DREAMHOST_PATH" in
+            /home/*/andrewsunada.com|/home/*/www.andrewsunada.com) ;;
+            *)
+              echo "::error::DREAMHOST_PATH must be the site directory, /home/<user>/andrewsunada.com"
+              exit 1
+              ;;
+          esac
+          test -f build/index.html || { echo "::error::build/index.html is missing"; exit 1; }
+          rsync -rlvz --delete --checksum \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts" \
+            build/ "$DREAMHOST_USER@$DREAMHOST_HOST:$DREAMHOST_PATH/"
+      - name: Remove the deploy key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

@@ -50,6 +50,10 @@ Build-time configuration (see `.env.example`; CI reads GitHub repository variabl
 
 Validation and submission live in `src/lib/components/ContactForm/contactSubmission.ts`; the Turnstile loader is `turnstile.ts` beside it.
 
+## Release
+
+`main` is the live site. A push to `main` runs `.github/workflows/ci.yml`, which verifies the build and rsyncs it to DreamHost; pull requests run the checks only. Secrets and variables the workflow reads are listed in `README.md`. HTTPS is forced by `static/.htaccess`, which also serves `404.html` for unknown paths.
+
 ## Rules
 
 - **The repo is public.** `docs/research/` and `assets/photos/` are git-ignored and stay that way. Never commit or publish student names, coach or partner names from private notes, a home address, a phone number, or any email address other than `andrew@andrewsunada.com`.

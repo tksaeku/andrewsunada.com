@@ -21,7 +21,22 @@ npm run verify
 
 ## Release it
 
-Pushing to `main` runs the same checks in GitHub Actions and, when they pass, copies `build/` to the DreamHost web directory over SSH. Pull requests run the checks without deploying.
+Pushing to `main` runs `.github/workflows/ci.yml`: the `verify` job runs `npm run verify`, and when it passes the `deploy` job copies that verified `build/` to the DreamHost web directory with `rsync --delete` over SSH. Pull requests run the checks without deploying.
+
+The workflow reads:
+
+| Kind | Name | Holds |
+|---|---|---|
+| Secret | `DREAMHOST_SSH_KEY` | Private half of the deploy-only SSH key |
+| Secret | `DREAMHOST_KNOWN_HOSTS` | The server's pinned host key line (`ssh-keyscan` output, checked by hand) |
+| Secret | `DREAMHOST_HOST` | The DreamHost SSH hostname |
+| Secret | `DREAMHOST_USER` | The DreamHost shell user |
+| Secret | `DREAMHOST_PATH` | The site directory, `/home/<user>/andrewsunada.com` |
+| Variable | `PUBLIC_CONTACT_FORM_ENDPOINT` | Formspree form URL |
+| Variable | `PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key |
+| Variable | `PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional Search Console token |
+
+The deploy refuses to run if a secret is empty or `DREAMHOST_PATH` is not an `andrewsunada.com` site directory.
 
 ## Content
 
