@@ -1,2 +1,5 @@
-<h1>404</h1>
-<p><a href="/">Back to the home page</a></p>
+<script lang="ts">
+	import ErrorMessage from '$lib/components/ErrorMessage/ErrorMessage.svelte';
+</script>
+
+<ErrorMessage status={404} />

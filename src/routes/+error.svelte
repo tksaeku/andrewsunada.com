@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import ErrorMessage from '$lib/components/ErrorMessage/ErrorMessage.svelte';
 </script>
 
-<h1>{page.status}</h1>
-<p><a href="/">Back to the home page</a></p>
+<svelte:head>
+	<title>Page not found · Andrew Sunada</title>
+	<meta name="robots" content="noindex" />
+</svelte:head>
+
+<ErrorMessage status={page.status} />
