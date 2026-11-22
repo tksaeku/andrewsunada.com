@@ -1,0 +1,26 @@
+// Design tokens. Shu is the only accent colour; photos are black and white.
+//
+// Measured WCAG contrast ratios (AA needs 4.5:1 for body text, 3:1 for large text and UI):
+//   sumi on paper       14.38:1   sumi on paper-band     13.26:1
+//   usuzumi on paper     5.00:1   usuzumi on paper-band   4.62:1
+//   shu on paper         5.03:1   shu on paper-band       4.64:1
+//   paper on shu         5.03:1
+// Every pairing passes AA for body text, so shu may carry small links and labels.
+
+$shu: #b44735;
+$sumi: #242522;
+$usuzumi: #6e6a66;
+$hairline: #dad5cf;
+$paper: #f8f7f3;
+$paper-band: #efeee9;
+
+$font-display: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+$font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+$font-seal: 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+
+$gutter-label: 6rem;
+$page-width: 72rem;
+$page-padding: clamp(1.25rem, 5vw, 3rem);
+
+$narrow: 40rem;
+$wide: 64rem;

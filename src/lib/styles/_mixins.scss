@@ -1,0 +1,39 @@
+@use 'tokens' as *;
+
+// Asymmetric two-column grid: a label column on the left and the content on the right.
+// Below $narrow the label stacks above the content.
+@mixin label-gutter {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.5rem;
+
+	@media (min-width: $narrow) {
+		grid-template-columns: minmax($gutter-label, 1fr) 3fr;
+		gap: 2.5rem;
+	}
+}
+
+@mixin page-container {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: $page-width;
+	margin-inline: auto;
+	padding-inline: $page-padding;
+}
+
+@mixin small-label {
+	font-family: $font-body;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+@mixin display-headline {
+	font-family: $font-display;
+	font-optical-sizing: auto;
+	font-variation-settings: 'opsz' 72;
+	font-weight: 400;
+	letter-spacing: -0.025em;
+	line-height: 1.05;
+}
