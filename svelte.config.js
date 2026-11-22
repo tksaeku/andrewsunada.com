@@ -5,6 +5,12 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
+		typescript: {
+			config: (tsconfig) => ({
+				...tsconfig,
+				include: [...tsconfig.include, '../scripts/**/*.ts'],
+			}),
+		},
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',

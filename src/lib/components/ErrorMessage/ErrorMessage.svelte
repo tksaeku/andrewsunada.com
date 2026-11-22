@@ -5,6 +5,11 @@
 	const isNotFound = $derived(status === 404);
 </script>
 
+<svelte:head>
+	<title>{isNotFound ? 'Page not found' : 'Something went wrong'} · Andrew Sunada</title>
+	<meta name="robots" content="noindex" />
+</svelte:head>
+
 <div class="error-message">
 	<p class="status">{status}</p>
 	<h1>{isNotFound ? 'This page has moved on.' : 'Something went wrong.'}</h1>
