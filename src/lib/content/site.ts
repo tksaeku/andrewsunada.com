@@ -54,3 +54,12 @@ export const serviceAreas = [
 	{ locality: 'Portland', region: 'OR' },
 	{ locality: 'Vancouver', region: 'WA' },
 ];
+
+export const contactPageCopy = {
+	heroLabel: 'Contact',
+	headline: 'Let’s talk.',
+	introduction: 'Book a private lesson, or send a message about monthly coaching, workshops, convention staffing or software work.',
+	formHeading: 'Send a message',
+	emailHeading: 'Or write to me directly',
+	profilesHeading: 'Find me elsewhere',
+};

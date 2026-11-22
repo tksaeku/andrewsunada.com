@@ -36,6 +36,19 @@ npm run verify    # check + lint + test + build + build checks; what CI runs
 - Each content module has a `.test.ts` beside it pinning the values that must not drift (rates, links, menu order). Update the test when a value changes on purpose.
 - Photos: copy the chosen file from `assets/photos/` into `src/lib/images/` and register it in `src/lib/content/photos.ts` with `alt` text and a caption.
 - Per-page titles and descriptions live in `src/lib/seo/pageMeta.ts`.
+- "Book a lesson" opens Calendly when `privateLessonBookingUrl` in `src/lib/content/site.ts` is set; while it is empty the button links to `/contact/?topic=lesson`.
+
+## Contact form
+
+The form on `/contact/` posts JSON to **Formspree**, which verifies the **Cloudflare Turnstile** token (`cf-turnstile-response`) with the secret key stored in the Formspree form's CAPTCHA settings and forwards the message to `andrew@andrewsunada.com`. Formspree was chosen because it verifies Turnstile server-side and accepts AJAX submissions; Web3Forms only offers Turnstile on its paid tier.
+
+Build-time configuration (see `.env.example`; CI reads GitHub repository variables):
+
+- `PUBLIC_CONTACT_FORM_ENDPOINT` — the Formspree form URL. When empty, submissions fail with the inline error that points to the email address.
+- `PUBLIC_TURNSTILE_SITE_KEY` — the Turnstile widget's site key for `andrewsunada.com`. When empty, no widget renders.
+- `PUBLIC_GOOGLE_SITE_VERIFICATION` — optional Search Console token.
+
+Validation and submission live in `src/lib/components/ContactForm/contactSubmission.ts`; the Turnstile loader is `turnstile.ts` beside it.
 
 ## Rules
 
