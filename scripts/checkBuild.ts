@@ -113,6 +113,17 @@ export const findMetadataProblems = (html: string): string[] => {
 	return problems;
 };
 
+/**
+ * Lists relative href and src URLs. Apache serves 404.html at whatever path was requested, so a
+ * relative asset URL there resolves against the wrong directory.
+ */
+export const findRelativeAssetReferences = (html: string): string[] => {
+	const document = new JSDOM(html).window.document;
+	return [...document.querySelectorAll('[href], [src]')]
+		.flatMap((element) => [element.getAttribute('href'), element.getAttribute('src')])
+		.filter((url): url is string => url !== null && (url.startsWith('./') || url.startsWith('../')));
+};
+
 export const findForbiddenText = (text: string): string[] => {
 	return forbiddenFragments.filter((fragment) => text.includes(fragment));
 };
@@ -160,9 +171,13 @@ const checkBuild = (buildDirectory: string): string[] => {
 	});
 
 	const notFoundPage = getPage('404.html');
-	const notFoundProblems = notFoundPage && new JSDOM(notFoundPage.html).window.document.querySelectorAll('h1').length !== 1
+	const notFoundHeadingProblems = notFoundPage && new JSDOM(notFoundPage.html).window.document.querySelectorAll('h1').length !== 1
 		? ['404.html: expected one h1']
 		: [];
+	const notFoundAssetProblems = notFoundPage
+		? findRelativeAssetReferences(notFoundPage.html).map((url) => `404.html: relative asset URL ${url}`)
+		: [];
+	const notFoundProblems = [...notFoundHeadingProblems, ...notFoundAssetProblems];
 
 	const brokenLinks = findBrokenInternalLinks(pages, existingFiles).map((problem) => `broken link: ${problem}`);
 

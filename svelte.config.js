@@ -17,6 +17,10 @@ const config = {
 			fallback: undefined,
 			strict: true,
 		}),
+		// Root-absolute asset URLs, so 404.html still loads its styles when Apache serves it at a nested path.
+		paths: {
+			relative: false,
+		},
 		prerender: {
 			handleHttpError: 'fail',
 			handleMissingId: 'fail',

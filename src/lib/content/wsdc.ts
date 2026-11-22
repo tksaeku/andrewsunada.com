@@ -3,7 +3,8 @@ import type { WsdcRecord } from './types';
 export const wsdcRecord: WsdcRecord = {
 	wsdcId: 8715,
 	division: 'All-Stars',
-	registryUrl: 'https://points.worldsdc.com/lookup2020/find?num=8715',
+	registryUrl: 'https://www.worldsdc.com/registry-points/',
+	registryRecordUrl: 'https://points.worldsdc.com/lookup2020/find?num=8715',
 	placements: [
 		{ event: 'The Bend Connection', year: 2025, division: 'All-Stars', place: 2 },
 		{ event: 'SwingCouver', year: 2020, division: 'All-Stars', place: 3 },
@@ -29,7 +30,7 @@ export const dancePageCopy = {
 		label: 'Record',
 		headline: 'All-Stars since 2016.',
 		body: 'I worked up through Novice, Intermediate and Advanced to the All-Stars division. These are my All-Star podium finishes; the registry has every result.',
-		registryLinkLabel: 'See my WSDC record',
+		registryLinkLabel: `Look up WSDC #${wsdcRecord.wsdcId} in the registry`,
 	},
 	videos: {
 		label: 'Videos',

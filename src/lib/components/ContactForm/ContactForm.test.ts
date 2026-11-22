@@ -68,4 +68,30 @@ describe('ContactForm', () => {
 		});
 		vi.unstubAllGlobals();
 	});
+
+	describe('when the form service is not configured', () => {
+		it('shows the email address instead of a form that cannot send', () => {
+			const { container } = render(ContactForm, { endpoint: '', turnstileSiteKey: '', initialTopic: '' });
+			expect(container.querySelector('form')).toBeNull();
+			expect(screen.getByRole('link', { name: 'andrew@andrewsunada.com' })).toHaveAttribute('href', 'mailto:andrew@andrewsunada.com');
+		});
+	});
+
+	describe('with Turnstile', () => {
+		it('waits for verification before the message can be sent', () => {
+			render(ContactForm, { endpoint, turnstileSiteKey: 'test-site-key', initialTopic: '' });
+			expect(screen.getByRole('button', { name: /Verifying/ })).toBeDisabled();
+		});
+
+		it('explains when verification cannot load', async () => {
+			render(ContactForm, { endpoint, turnstileSiteKey: 'test-site-key', initialTopic: '' });
+			const script = await waitFor(() => {
+				const element = document.querySelector<HTMLScriptElement>('script[src*="challenges.cloudflare.com"]');
+				expect(element).not.toBeNull();
+				return element as HTMLScriptElement;
+			});
+			script.dispatchEvent(new Event('error'));
+			expect(await screen.findByRole('alert')).toHaveTextContent(/verification/i);
+		});
+	});
 });

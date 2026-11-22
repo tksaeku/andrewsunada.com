@@ -11,7 +11,8 @@ describe('wsdcRecord', () => {
 		expect(wsdcRecord.placements.every(({ place }) => place >= 1 && place <= 3)).toBe(true);
 	});
 
-	it('links the public registry', () => {
-		expect(wsdcRecord.registryUrl).toMatch(/^https:\/\/.+8715/);
+	it('links the public registry and the dancer-specific record', () => {
+		expect(wsdcRecord.registryUrl).toMatch(/^https:\/\/www\.worldsdc\.com\//);
+		expect(wsdcRecord.registryRecordUrl).toMatch(/^https:\/\/.+8715/);
 	});
 });

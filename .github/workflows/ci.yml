@@ -81,6 +81,7 @@ jobs:
           esac
           test -f build/index.html || { echo "::error::build/index.html is missing"; exit 1; }
           rsync -rlvz --delete --checksum \
+            --exclude='.well-known/' --exclude='cgi-bin/' --exclude='.dh-diag' \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts" \
             build/ "$DREAMHOST_USER@$DREAMHOST_HOST:$DREAMHOST_PATH/"
       - name: Remove the deploy key

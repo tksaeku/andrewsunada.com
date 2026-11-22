@@ -23,6 +23,13 @@ describe('Dance page', () => {
 		expect(years).toEqual(expectedYears);
 	});
 
+	it('sends visitors to a readable registry page, not raw data', () => {
+		const { container } = render(DancePage);
+		const registryLink = [...container.querySelectorAll('a')].find((link) => link.getAttribute('href') === wsdcRecord.registryUrl);
+		expect(registryLink?.getAttribute('href')).not.toMatch(/lookup2020\/find|\.json/);
+		expect(registryLink?.textContent).toContain('8715');
+	});
+
 	it('links the full YouTube channel', () => {
 		const { container } = render(DancePage);
 		expect([...container.querySelectorAll('a')].some((link) => link.getAttribute('href') === 'https://www.youtube.com/@AndrewSunada')).toBe(true);

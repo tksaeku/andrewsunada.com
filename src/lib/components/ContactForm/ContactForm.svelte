@@ -28,25 +28,36 @@
 	let turnstileToken = $state('');
 	let turnstileContainer: HTMLDivElement | undefined = $state();
 	let turnstileWidget: TurnstileWidget | null = null;
+	let hasTurnstileFailed = $state(false);
 
+	const hasEndpoint = $derived(endpoint.trim() !== '');
 	const hasTurnstile = $derived(turnstileSiteKey.trim() !== '');
+	const isVerifying = $derived(hasTurnstile && turnstileToken === '' && !hasTurnstileFailed);
+	const submitLabel = $derived(isSending ? 'Sending…' : isVerifying ? 'Verifying…' : 'Send message');
 
 	onMount(() => {
 		if (!hasTurnstile || !turnstileContainer) {
 			return;
 		}
 		const container = turnstileContainer;
+		let isDestroyed = false;
 		void (async (): Promise<void> => {
 			try {
-				turnstileWidget = await mountTurnstile(container, turnstileSiteKey, (token) => {
+				const widget = await mountTurnstile(container, turnstileSiteKey, (token) => {
 					turnstileToken = token;
 				});
+				if (isDestroyed) {
+					widget.remove();
+					return;
+				}
+				turnstileWidget = widget;
 			} catch {
-				turnstileWidget = null;
+				hasTurnstileFailed = true;
 			}
 		})();
 
 		return (): void => {
+			isDestroyed = true;
 			turnstileWidget?.remove();
 		};
 	});
@@ -78,7 +89,12 @@
 	};
 </script>
 
-{#if hasSent}
+{#if !hasEndpoint}
+	<div class="unavailable">
+		<p>The contact form isn’t available right now. Please email me instead:</p>
+		<p><a href="mailto:{contactEmail}">{contactEmail}</a></p>
+	</div>
+{:else if hasSent}
 	<div class="confirmation" role="status">
 		<p class="confirmation-title">Thank you — your message is on its way.</p>
 		<p>I’ll reply to {values.email} as soon as I can, usually within a couple of days.</p>
@@ -155,6 +171,13 @@
 			<div class="turnstile" bind:this={turnstileContainer}></div>
 		{/if}
 
+		{#if hasTurnstileFailed}
+			<div class="failure" role="alert">
+				Spam verification didn’t load, so the form can’t send your message. Please reload the page, or email
+				<a href="mailto:{contactEmail}">{contactEmail}</a>.
+			</div>
+		{/if}
+
 		{#if hasFailed}
 			<div class="failure" role="alert">
 				Your message didn’t send. Everything you wrote is still here — please try again, or email
@@ -162,8 +185,8 @@
 			</div>
 		{/if}
 
-		<button class="submit" type="submit" disabled={isSending}>
-			{isSending ? 'Sending…' : 'Send message'}
+		<button class="submit" type="submit" disabled={isSending || isVerifying || hasTurnstileFailed}>
+			{submitLabel}
 		</button>
 	</form>
 {/if}
@@ -243,6 +266,12 @@
 			cursor: progress;
 			opacity: 0.7;
 		}
+	}
+
+	.unavailable {
+		display: grid;
+		gap: 0.5rem;
+		max-width: 36rem;
 	}
 
 	.confirmation {

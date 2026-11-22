@@ -31,7 +31,7 @@ export const buildWebSite = (): JsonLd => {
 
 export const buildPerson = (): PersonJsonLd => {
 	const profileUrls = getVisibleSocialLinks().map(({ url }) => url);
-	const sameAs = [...profileUrls, wsdcRecord.registryUrl].filter((url) => url.trim() !== '');
+	const sameAs = [...profileUrls, wsdcRecord.registryRecordUrl].filter((url) => url.trim() !== '');
 
 	return {
 		'@context': schemaContext,

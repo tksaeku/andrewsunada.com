@@ -1,4 +1,6 @@
-import { findBrokenInternalLinks, findForbiddenText, findMetadataProblems } from './checkBuild';
+import {
+	findBrokenInternalLinks, findForbiddenText, findMetadataProblems, findRelativeAssetReferences,
+} from './checkBuild';
 
 const validHead = `
 	<title>Coaching · Andrew Sunada</title>
@@ -78,5 +80,16 @@ describe('findForbiddenText', () => {
 			'samuraijs', 'SwingCoder911', 'docs/research',
 		]);
 		expect(findForbiddenText('all clear')).toEqual([]);
+	});
+});
+
+describe('findRelativeAssetReferences', () => {
+	it('reports relative asset urls that break when Apache serves the page at another path', () => {
+		const html = buildPage('<link href="./_app/a.css" rel="stylesheet"><link rel="modulepreload" href="../_app/b.js">', '<img alt="" src="./_app/c.avif"><a href="/coaching/">C</a>');
+		expect(findRelativeAssetReferences(html)).toEqual(['./_app/a.css', '../_app/b.js', './_app/c.avif']);
+	});
+
+	it('passes root-absolute urls', () => {
+		expect(findRelativeAssetReferences(buildPage('<link href="/_app/a.css">', '<img alt="" src="/_app/c.avif">'))).toEqual([]);
 	});
 });

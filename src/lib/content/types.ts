@@ -39,7 +39,15 @@ export type Video = {
 
 export type Placement = { event: string; year: number; division: string; place: number };
 
-export type WsdcRecord = { wsdcId: number; division: string; registryUrl: string; placements: Placement[] };
+export type WsdcRecord = {
+	wsdcId: number;
+	division: string;
+	/** Human-readable registry lookup page, linked from the Dance page. */
+	registryUrl: string;
+	/** Machine-readable record for this dancer, used in structured data. */
+	registryRecordUrl: string;
+	placements: Placement[];
+};
 
 export type AppProject = {
 	slug: string;
