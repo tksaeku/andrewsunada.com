@@ -1,4 +1,4 @@
-import type { NavigationItem, SocialLink } from './types';
+import type { ContactTopic, NavigationItem, SocialLink } from './types';
 
 export const siteOrigin = 'https://www.andrewsunada.com';
 export const siteName = 'Andrew Sunada';
@@ -45,6 +45,10 @@ export const photographerCredit = { name: 'Doug Silton', url: 'https://dougsilto
 export const privateLessonBookingUrl = '';
 
 export const lessonContactPath = '/contact/?topic=lesson';
+
+export const getContactPath = (topic: ContactTopic): string => {
+	return `/contact/?topic=${topic}`;
+};
 
 export const serviceAreas = [
 	{ locality: 'Portland', region: 'OR' },

@@ -131,3 +131,27 @@ export const workshops: Workshop[] = [
 		],
 	},
 ];
+
+export const coachingPageCopy = {
+	heroLabel: 'Lessons · Coaching · Workshops',
+	headline: 'West Coast Swing coaching',
+	sectionLabels: {
+		'private-lessons': 'One-on-one',
+		'monthly-coaching': 'Ongoing',
+		workshops: 'Groups',
+		conventions: 'Events',
+		drills: 'Practice',
+	} as Record<string, string>,
+	callToActionLabels: {
+		'monthly-coaching': 'Ask about monthly coaching',
+		workshops: 'Ask about workshop dates',
+		conventions: 'Invite me to your event',
+	} as Record<string, string>,
+	venuesHeading: 'Where I teach',
+	workshopsHeading: 'The workshop series',
+	paymentNote: 'Pay by cash or Venmo, monthly or per session.',
+	drillLibrary: {
+		headline: 'Drill library',
+		introduction: 'A few of the drills I give students. Each one isolates a single skill, so you can practise it alone in a few minutes a day.',
+	},
+};
