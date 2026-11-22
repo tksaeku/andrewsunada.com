@@ -41,3 +41,18 @@ export const appProjects: AppProject[] = [
 		linkLabel: 'View the code on GitHub',
 	},
 ];
+
+export const appsPageCopy = {
+	heroLabel: 'Software',
+	headline: 'Apps I build and run',
+	projects: {
+		label: 'Projects',
+		headline: 'Built end to end.',
+	},
+	github: {
+		label: 'Code',
+		headline: 'More on GitHub.',
+		body: 'Most of these apps are private because they hold real household and payroll data. My public experiments and older projects are on GitHub.',
+		linkLabel: 'Visit github.com/tksaeku',
+	},
+};

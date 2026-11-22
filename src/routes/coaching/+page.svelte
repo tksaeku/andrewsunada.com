@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ArrowLink from '$lib/components/ArrowLink/ArrowLink.svelte';
 	import BookingButton from '$lib/components/BookingButton/BookingButton.svelte';
+	import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
 	import Photo from '$lib/components/Photo/Photo.svelte';
 	import RateList from '$lib/components/RateList/RateList.svelte';
 	import Section from '$lib/components/Section/Section.svelte';
@@ -18,19 +19,12 @@
 	};
 </script>
 
-<div class="page-header">
-	<div class="header-text">
-		<p class="header-label">{coachingPageCopy.heroLabel}</p>
-		<h1>{coachingPageCopy.headline}</h1>
-		<p class="introduction">{coachingIntroduction}</p>
-		<div class="header-actions">
-			<BookingButton bookingUrl={privateLessonBookingUrl} fallbackPath={lessonContactPath} />
-		</div>
-	</div>
-	<div class="header-photo">
-		<Photo photo={sitePhotos.coachingLessons} isEager sizes="(min-width: 40rem) 26rem, 100vw" />
-	</div>
-</div>
+<PageHeader label={coachingPageCopy.heroLabel} headline={coachingPageCopy.headline} photo={sitePhotos.coachingLessons}>
+	<p>{coachingIntroduction}</p>
+	{#snippet actions()}
+		<BookingButton bookingUrl={privateLessonBookingUrl} fallbackPath={lessonContactPath} />
+	{/snippet}
+</PageHeader>
 
 {#each coachingOffers as offer, index (offer.slug)}
 	<Section
@@ -125,45 +119,6 @@
 <style lang="scss">
 	@use 'tokens' as *;
 	@use 'mixins' as *;
-
-	.page-header {
-		@include page-container;
-		display: grid;
-		gap: 3rem;
-		align-items: center;
-		padding-block: clamp(3rem, 8vw, 6rem);
-
-		@media (min-width: $narrow) {
-			grid-template-columns: 1.3fr 1fr;
-		}
-	}
-
-	.header-label {
-		@include small-label;
-		color: $shu;
-		font-size: 0.6875rem;
-	}
-
-	h1 {
-		@include display-headline;
-		margin-block: 1rem 1.5rem;
-		font-size: clamp(3rem, 8vw, 5.5rem);
-	}
-
-	.introduction {
-		max-width: 34rem;
-		font-size: 1.125rem;
-	}
-
-	.header-actions {
-		margin-top: 2rem;
-	}
-
-	.header-photo {
-		max-width: 26rem;
-		justify-self: end;
-		width: 100%;
-	}
 
 	.lead {
 		max-width: 40rem;
