@@ -4,7 +4,7 @@ import VideoEmbed from './VideoEmbed.svelte';
 
 const video: Video = {
 	youtubeId: 'efsA9uA58Ss', title: 'All-American Jack and Jill prelims, heat 3', event: 'Rose City Swing',
-	year: 2025, uploadedAt: '2025-02-25T10:24:29-08:00', isFeatured: true,
+	year: 2025, uploadedAt: '2025-02-25T10:24:29-08:00',
 };
 
 describe('VideoEmbed', () => {

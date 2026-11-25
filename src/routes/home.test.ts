@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/svelte';
 import { sitePhotos } from '$lib/content/photos';
-import { lessonContactPath, privateLessonBookingUrl } from '$lib/content/site';
+import { lessonBookingEmailUrl, privateLessonBookingUrl, youtubeChannelUrl } from '$lib/content/site';
 import HomePage from './+page.svelte';
 
 describe('Home page', () => {
@@ -15,8 +15,8 @@ describe('Home page', () => {
 	it('offers a lesson booking and a way to watch Andrew dance', () => {
 		render(HomePage);
 		const [bookingLink] = screen.getAllByRole('link', { name: 'Book a lesson' });
-		expect(bookingLink).toHaveAttribute('href', privateLessonBookingUrl || lessonContactPath);
-		expect(screen.getByRole('link', { name: /Watch me dance/ })).toHaveAttribute('href', '/dance/');
+		expect(bookingLink).toHaveAttribute('href', privateLessonBookingUrl || lessonBookingEmailUrl);
+		expect(screen.getByRole('link', { name: /Watch me dance/ })).toHaveAttribute('href', youtubeChannelUrl);
 	});
 
 	it('shows the hero portrait', () => {

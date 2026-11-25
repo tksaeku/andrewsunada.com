@@ -34,18 +34,10 @@ describe('venues', () => {
 		expect(venues.map(({ name }) => name)).toEqual(['Dance with Joy Studios', 'Norse Hall']);
 		expect(venues.every(({ url }) => url.startsWith('https://'))).toBe(true);
 	});
-
-	it('gives the loose schedule, not dates', () => {
-		expect(venues.map(({ schedule }) => schedule)).toEqual(['some Saturdays', 'some Wednesdays']);
-	});
 });
 
 describe('workshops', () => {
-	it('runs from Level 1 to the All-Star bootcamp', () => {
-		expect(workshops.map(({ level }) => level)).toEqual(['Level 1', 'Level 2', 'Advanced', 'All-Star']);
-	});
-
-	it('gives each workshop three to five outline points', () => {
-		expect(workshops.every(({ outline }) => outline.length >= 3 && outline.length <= 5)).toBe(true);
+	it('lists the three workshops by title', () => {
+		expect(workshops.map(({ title }) => title)).toEqual(['Rhythm and Rhyme', 'The Volume Dial', 'Exit and Enter Swing']);
 	});
 });

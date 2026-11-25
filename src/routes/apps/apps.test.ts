@@ -18,10 +18,10 @@ describe('Apps page', () => {
 		expect(names).toEqual(['Meeko', 'TK Wallet', 'WeMove', 'Bingo']);
 	});
 
-	it('links Meeko and leaves the private apps unlinked', () => {
+	it('links the live apps and leaves WeMove unlinked', () => {
 		const { container } = render(AppsPage);
 		expect(getCard(container, 'Meeko').querySelector('a')).toHaveAttribute('href', 'https://www.meekoapp.com');
-		expect(getCard(container, 'TK Wallet').querySelector('a')).toBeNull();
+		expect(getCard(container, 'TK Wallet').querySelector('a')).toHaveAttribute('href', 'https://tkwallet.me/home');
 		expect(getCard(container, 'WeMove').querySelector('a')).toBeNull();
 	});
 

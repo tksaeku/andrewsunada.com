@@ -1,44 +1,21 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import BookingButton from '$lib/components/BookingButton/BookingButton.svelte';
-	import ContactForm from '$lib/components/ContactForm/ContactForm.svelte';
-	import { parseTopic } from '$lib/components/ContactForm/contactSubmission';
 	import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
 	import SocialLinks from '$lib/components/SocialLinks/SocialLinks.svelte';
 	import { sitePhotos } from '$lib/content/photos';
 	import {
-		contactEmail, contactPageCopy, lessonContactPath, privateLessonBookingUrl, socialLinks,
+		contactEmail, contactPageCopy, lessonBookingEmailUrl, privateLessonBookingUrl, socialLinks,
 	} from '$lib/content/site';
-	import type { ContactTopic } from '$lib/content/types';
-
-	const contactFormEndpoint = import.meta.env.PUBLIC_CONTACT_FORM_ENDPOINT ?? '';
-	const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
-
-	// The page is prerendered, so the topic is read from the address bar once the page is in the browser.
-	let initialTopic: ContactTopic | '' = $state('');
-
-	onMount(() => {
-		initialTopic = parseTopic(new URLSearchParams(window.location.search).get('topic'));
-	});
 </script>
 
 <PageHeader label={contactPageCopy.heroLabel} headline={contactPageCopy.headline} photo={sitePhotos.contact}>
 	<p>{contactPageCopy.introduction}</p>
 	{#snippet actions()}
-		<BookingButton bookingUrl={privateLessonBookingUrl} fallbackPath={lessonContactPath} />
+		<BookingButton bookingUrl={privateLessonBookingUrl} fallbackPath={lessonBookingEmailUrl} />
 	{/snippet}
 </PageHeader>
 
 <div class="contact">
-	<section class="block" aria-labelledby="form-heading">
-		<h2 id="form-heading" class="block-heading">{contactPageCopy.formHeading}</h2>
-		<div>
-			{#key initialTopic}
-				<ContactForm endpoint={contactFormEndpoint} {turnstileSiteKey} {initialTopic} />
-			{/key}
-		</div>
-	</section>
-
 	<section class="block" aria-labelledby="email-heading">
 		<h2 id="email-heading" class="block-heading">{contactPageCopy.emailHeading}</h2>
 		<div>

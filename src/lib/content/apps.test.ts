@@ -9,9 +9,10 @@ describe('appProjects', () => {
 		expect(appProjects.find(({ name }) => name === 'Meeko')?.linkUrl).toBe('https://www.meekoapp.com');
 	});
 
-	it('links no private app', () => {
-		const privateApps = appProjects.filter(({ name }) => name === 'TK Wallet' || name === 'WeMove');
-		expect(privateApps.map(({ linkUrl }) => linkUrl)).toEqual(['', '']);
+	it('links TK Wallet and leaves WeMove unlinked', () => {
+		const linkUrlByName = Object.fromEntries(appProjects.map(({ name, linkUrl }) => [name, linkUrl]));
+		expect(linkUrlByName['TK Wallet']).toBe('https://tkwallet.me/home');
+		expect(linkUrlByName.WeMove).toBe('');
 	});
 
 	it('links Bingo to its public repository', () => {

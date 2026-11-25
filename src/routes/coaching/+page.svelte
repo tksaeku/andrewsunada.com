@@ -6,14 +6,12 @@
 	import RateList from '$lib/components/RateList/RateList.svelte';
 	import Section from '$lib/components/Section/Section.svelte';
 	import { coachingIntroduction, coachingOffers, coachingPageCopy, venues, workshops } from '$lib/content/coaching';
-	import { drills } from '$lib/content/drills';
+	import { drillTopics } from '$lib/content/drills';
 	import { sitePhotos } from '$lib/content/photos';
-	import { getContactPath, lessonContactPath, privateLessonBookingUrl } from '$lib/content/site';
+	import {
+		drillLibraryEmailUrl, getContactPath, lessonBookingEmailUrl, privateLessonBookingUrl,
+	} from '$lib/content/site';
 
-	const drillTopics = [...new Set(drills.map(({ topic }) => topic))];
-	const getDrillsForTopic = (topic: string): typeof drills => {
-		return drills.filter((drill) => drill.topic === topic);
-	};
 	const getSectionNumber = (index: number): string => {
 		return String(index + 1).padStart(2, '0');
 	};
@@ -22,7 +20,7 @@
 <PageHeader label={coachingPageCopy.heroLabel} headline={coachingPageCopy.headline} photo={sitePhotos.coachingLessons}>
 	<p>{coachingIntroduction}</p>
 	{#snippet actions()}
-		<BookingButton bookingUrl={privateLessonBookingUrl} fallbackPath={lessonContactPath} />
+		<BookingButton bookingUrl={privateLessonBookingUrl} fallbackPath={lessonBookingEmailUrl} />
 	{/snippet}
 </PageHeader>
 
@@ -53,40 +51,36 @@
 
 		{#if offer.slug === 'workshops'}
 			<div class="workshops-layout">
-				<div class="venues">
-					<h3>{coachingPageCopy.venuesHeading}</h3>
-					<ul>
-						{#each venues as venue (venue.name)}
-							<li>
-								<a href={venue.url} rel="noopener">{venue.name}</a>
-								<span>{venue.locality}, {venue.region} · {venue.schedule}</span>
-							</li>
-						{/each}
-					</ul>
+				<div class="workshops-details">
+					<div class="venues">
+						<h3>{coachingPageCopy.venuesHeading}</h3>
+						<ul>
+							{#each venues as venue (venue.name)}
+								<li>
+									<a href={venue.url} target="_blank" rel="noopener noreferrer">{venue.name}</a>
+									<span>{venue.locality}, {venue.region}</span>
+								</li>
+							{/each}
+						</ul>
+					</div>
+					<div>
+						<h3>{coachingPageCopy.workshopsHeading}</h3>
+						<ul class="workshop-list">
+							{#each workshops as workshop (workshop.slug)}
+								<li><h4>{workshop.title}</h4></li>
+							{/each}
+						</ul>
+					</div>
 				</div>
 				<div class="workshops-photo">
 					<Photo photo={sitePhotos.coachingWorkshops} sizes="(min-width: 40rem) 18rem, 100vw" />
 				</div>
 			</div>
-			<h3 class="series-heading">{coachingPageCopy.workshopsHeading}</h3>
-			<ol class="workshop-list">
-				{#each workshops as workshop (workshop.slug)}
-					<li class="workshop">
-						<p class="workshop-level">{workshop.level}</p>
-						<h4>{workshop.title}</h4>
-						<ul>
-							{#each workshop.outline as point (point)}
-								<li>{point}</li>
-							{/each}
-						</ul>
-					</li>
-				{/each}
-			</ol>
 		{/if}
 
 		<div class="actions">
 			{#if offer.slug === 'private-lessons'}
-				<BookingButton bookingUrl={privateLessonBookingUrl} fallbackPath={lessonContactPath} />
+				<BookingButton bookingUrl={privateLessonBookingUrl} fallbackPath={lessonBookingEmailUrl} />
 			{:else}
 				<ArrowLink href={getContactPath(offer.contactTopic)}>{coachingPageCopy.callToActionLabels[offer.slug]}</ArrowLink>
 			{/if}
@@ -101,18 +95,13 @@
 	headline={coachingPageCopy.drillLibrary.headline}
 >
 	<p class="lead">{coachingPageCopy.drillLibrary.introduction}</p>
-	<div class="drill-topics">
+	<ul class="drill-topics">
 		{#each drillTopics as topic (topic)}
-			<div class="drill-topic">
-				<h3>{topic}</h3>
-				<dl>
-					{#each getDrillsForTopic(topic) as drill (drill.title)}
-						<dt>{drill.title}</dt>
-						<dd>{drill.description}</dd>
-					{/each}
-				</dl>
-			</div>
+			<li><h3>{topic}</h3></li>
 		{/each}
+	</ul>
+	<div class="actions">
+		<BookingButton bookingUrl="" fallbackPath={drillLibraryEmailUrl} label={coachingPageCopy.drillLibrary.emailLabel} />
 	</div>
 </Section>
 
@@ -198,49 +187,25 @@
 		}
 	}
 
-	.series-heading {
-		margin-top: 1rem;
+	.workshops-details {
+		display: grid;
+		gap: 2.5rem;
 	}
 
 	.workshop-list {
-		display: grid;
-		gap: 0;
-		margin: 0;
+		margin: 1rem 0 0;
 		padding: 0;
 		list-style: none;
-		border-top: 1px solid $hairline;
 
-		@media (min-width: $wide) {
-			grid-template-columns: 1fr 1fr;
-			column-gap: 2.5rem;
+		li {
+			padding-block: 0.75rem;
+			border-top: 1px solid $hairline;
 		}
-	}
-
-	.workshop {
-		display: grid;
-		gap: 0.5rem;
-		align-content: start;
-		padding-block: 1.5rem;
-		border-bottom: 1px solid $hairline;
 
 		h4 {
-			font-size: 1.4rem;
+			font-size: 1.35rem;
+			font-weight: 400;
 		}
-
-		ul {
-			display: grid;
-			gap: 0.35rem;
-			margin: 0.25rem 0 0;
-			padding-left: 1.1rem;
-			color: $usuzumi;
-			font-size: 0.9375rem;
-		}
-	}
-
-	.workshop-level {
-		@include small-label;
-		color: $shu;
-		font-size: 0.6875rem;
 	}
 
 	.actions {
@@ -249,28 +214,18 @@
 
 	.drill-topics {
 		display: grid;
-		gap: 2.5rem;
+		gap: 0 2.5rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
 
 		@media (min-width: $wide) {
 			grid-template-columns: 1fr 1fr;
 		}
-	}
 
-	.drill-topic dl {
-		margin: 1rem 0 0;
-		border-top: 1px solid $hairline;
-	}
-
-	dt {
-		margin-top: 1rem;
-		font-weight: 600;
-	}
-
-	dd {
-		margin: 0.25rem 0 1rem;
-		padding-bottom: 1rem;
-		border-bottom: 1px solid $hairline;
-		color: $usuzumi;
-		font-size: 0.9375rem;
+		li {
+			padding-block: 1rem;
+			border-bottom: 1px solid $hairline;
+		}
 	}
 </style>

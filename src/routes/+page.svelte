@@ -11,7 +11,7 @@
 	import { sitePhotos } from '$lib/content/photos';
 	import { engineeringIntroduction } from '$lib/content/resume';
 	import {
-		contactEmail, heroIntroduction, lessonContactPath, privateLessonBookingUrl, shortBio,
+		contactEmail, heroIntroduction, lessonBookingEmailUrl, privateLessonBookingUrl, shortBio, youtubeChannelUrl,
 	} from '$lib/content/site';
 	import { getFeaturedVideos } from '$lib/content/videos';
 	import { danceIntroduction } from '$lib/content/wsdc';
@@ -27,8 +27,8 @@
 		<h1 class="hero-name">Andrew <em>Sunada.</em></h1>
 		<p class="hero-introduction">{heroIntroduction}</p>
 		<div class="hero-actions">
-			<BookingButton bookingUrl={privateLessonBookingUrl} fallbackPath={lessonContactPath} />
-			<ArrowLink href="/dance/">Watch me dance</ArrowLink>
+			<BookingButton bookingUrl={privateLessonBookingUrl} fallbackPath={lessonBookingEmailUrl} />
+			<ArrowLink href={youtubeChannelUrl}>Watch me dance</ArrowLink>
 		</div>
 		<p class="hero-note">{homeCopy.heroNote}</p>
 	</div>

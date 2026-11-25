@@ -22,11 +22,10 @@ export type CoachingOffer = {
 	contactTopic: ContactTopic;
 };
 
-export type Venue = { name: string; url: string; schedule: string; locality: string; region: string };
+export type Venue = { name: string; url: string; locality: string; region: string };
 
-export type Workshop = { slug: string; title: string; level: string; outline: string[] };
+export type Workshop = { slug: string; title: string };
 
-export type Drill = { title: string; topic: string; description: string };
 
 export type Video = {
 	youtubeId: string;
@@ -34,19 +33,16 @@ export type Video = {
 	event: string;
 	year: number;
 	uploadedAt: string;
-	isFeatured: boolean;
 };
 
-export type Placement = { event: string; year: number; division: string; place: number };
 
 export type WsdcRecord = {
 	wsdcId: number;
 	division: string;
-	/** Human-readable registry lookup page, linked from the Dance page. */
+	/** Human-readable registry lookup page, listed in llms.txt. */
 	registryUrl: string;
 	/** Machine-readable record for this dancer, used in structured data. */
 	registryRecordUrl: string;
-	placements: Placement[];
 };
 
 export type AppProject = {

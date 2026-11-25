@@ -1,5 +1,5 @@
 import {
-	contactEmail, getVisibleSocialLinks, lessonContactPath, navigationItems, photographerCredit, privateLessonBookingUrl,
+	contactEmail, drillLibraryEmailUrl, footerLinks, getVisibleSocialLinks, lessonBookingEmailUrl, navigationItems, photographerCredit, privateLessonBookingUrl,
 	siteOrigin, socialLinks,
 } from './site';
 
@@ -16,9 +16,15 @@ describe('site identity', () => {
 		expect(photographerCredit).toEqual({ name: 'Doug Silton', url: 'https://dougsilton.com/' });
 	});
 
-	it('sends lesson enquiries to the contact form with the lesson topic', () => {
-		expect(lessonContactPath).toBe('/contact/?topic=lesson');
+	it('sends lesson enquiries by email with the lesson subject', () => {
+		expect(lessonBookingEmailUrl).toBe('mailto:andrew@andrewsunada.com?subject=Book%20a%20lesson');
 		expect(typeof privateLessonBookingUrl).toBe('string');
+	});
+
+	it('sends drill library enquiries by email with the subject and a starter message', () => {
+		expect(drillLibraryEmailUrl).toBe(
+			'mailto:andrew@andrewsunada.com?subject=Your%20drill%20library&body=Hey%20Andrew!%20I%20would%20love%20to%20learn%20more%20about%20your%20drill%20library.',
+		);
 	});
 });
 
@@ -29,6 +35,17 @@ describe('navigationItems', () => {
 
 	it('uses directory paths', () => {
 		expect(navigationItems.every(({ path }) => path.endsWith('/'))).toBe(true);
+	});
+});
+
+describe('footerLinks', () => {
+	it('lists the profiles, then eBay, then Email', () => {
+		expect(footerLinks.map(({ name }) => name)).toEqual(['Instagram', 'Facebook', 'LinkedIn', 'YouTube', 'GitHub', 'eBay', 'Email']);
+	});
+
+	it('links the eBay store and the email address', () => {
+		expect(footerLinks.find(({ name }) => name === 'eBay')?.url).toBe('https://www.ebay.com/usr/topknotcomics');
+		expect(footerLinks.find(({ name }) => name === 'Email')?.url).toBe('mailto:andrew@andrewsunada.com');
 	});
 });
 

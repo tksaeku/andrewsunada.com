@@ -1,15 +1,18 @@
-import { getFeaturedVideos, videos } from './videos';
+import { featuredVideos, getFeaturedVideos, mostWatchedVideos } from './videos';
 
 describe('videos', () => {
-	it('holds nine to twelve videos', () => {
-		expect(videos.length).toBeGreaterThanOrEqual(9);
-		expect(videos.length).toBeLessThanOrEqual(12);
+	it('lists the six most-watched videos, most-viewed first', () => {
+		expect(mostWatchedVideos.map(({ youtubeId }) => youtubeId)).toEqual([
+			'efsA9uA58Ss', 'zn_KCnNpbqI', 'Fv6GHXIhivg', 'JMrYJ8WOE5M', 'hVTXnpPAQlU', 'vobD36vD7XQ',
+		]);
 	});
 
 	it('uses unique, eleven-character YouTube ids', () => {
-		const ids = videos.map(({ youtubeId }) => youtubeId);
-		expect(new Set(ids).size).toBe(ids.length);
-		expect(ids.every((id) => /^[\w-]{11}$/.test(id))).toBe(true);
+		[mostWatchedVideos, featuredVideos].forEach((list) => {
+			const ids = list.map(({ youtubeId }) => youtubeId);
+			expect(new Set(ids).size).toBe(ids.length);
+			expect(ids.every((id) => /^[\w-]{11}$/.test(id))).toBe(true);
+		});
 	});
 
 	describe('getFeaturedVideos', () => {

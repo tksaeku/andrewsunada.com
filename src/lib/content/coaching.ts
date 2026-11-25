@@ -11,7 +11,7 @@ export const coachingOffers: CoachingOffer[] = [
 	{
 		slug: 'private-lessons',
 		title: 'Private lessons',
-		summary: 'One-on-one lessons built around what you want to work on, from your first fundamentals to All-Star competition.',
+		summary: 'One-on-one lessons built around what you want to work on, from your first fundamentals to your full expression.',
 		details: [
 			'Lessons happen in Portland, OR and Vancouver, WA.',
 			'We start with the fundamentals under whatever you bring — a pattern, a competition clip, a feeling that something is off — and fix the cause, not the symptom.',
@@ -47,7 +47,7 @@ export const coachingOffers: CoachingOffer[] = [
 	{
 		slug: 'workshops',
 		title: 'Workshops',
-		summary: 'Group workshops from Level 1 to an All-Star bootcamp, taught at Portland studios and weekend events.',
+		summary: 'Group workshops from Beginner to Advanced intensives, taught at Portland studios and weekend events.',
 		details: [
 			'Each workshop takes one idea and builds it from the body up, with drills you can keep using after the class.',
 			'Dates are announced through the venues; get in touch to hear about the next one or to bring a workshop to your scene.',
@@ -71,65 +71,21 @@ export const venues: Venue[] = [
 	{
 		name: 'Dance with Joy Studios',
 		url: 'https://dancewithjoystudios.com/',
-		schedule: 'some Saturdays',
 		locality: 'Portland',
 		region: 'OR',
 	},
 	{
 		name: 'Norse Hall',
 		url: 'https://www.grieglodge.org/',
-		schedule: 'some Wednesdays',
 		locality: 'Portland',
 		region: 'OR',
 	},
 ];
 
 export const workshops: Workshop[] = [
-	{
-		slug: 'rhythm-and-rhyme',
-		title: 'Rhythm and Rhyme',
-		level: 'Level 1',
-		outline: [
-			'Find the pulse of the music and put your body on it.',
-			'Three kinds of weight change: full, even and delayed.',
-			'The tripod foot, a stable base for every step.',
-			'The “and” as a half-beat placeholder.',
-		],
-	},
-	{
-		slug: 'the-volume-dial',
-		title: 'The Volume Dial',
-		level: 'Level 2',
-		outline: [
-			'Connection as a dial from 1 to 10, not an on-off switch.',
-			'Who owns which counts: the leader through 4, the follower on 5 and 6.',
-			'Compression and extension without manufacturing tension.',
-			'When to be the gas and when to be the brake.',
-		],
-	},
-	{
-		slug: 'exit-and-enter-swing',
-		title: 'Exit and Enter Swing',
-		level: 'Advanced',
-		outline: [
-			'The 99% solo shift: step into your own movement without leaving the partnership.',
-			'Posting on 4.',
-			'A decaying tail that brings you back together on a shared 1.',
-			'For dancers with command of the four fundamental patterns: sugar push, left-side pass, underarm turn and whip.',
-		],
-	},
-	{
-		slug: 'all-star-bootcamp',
-		title: 'All-Star bootcamp',
-		level: 'All-Star',
-		outline: [
-			'A four-hour intensive that opens with an assessment dance.',
-			'All-Star mechanics and the connection chain from floor to hand.',
-			'Follower influence and a system for varying your footwork.',
-			'Musical risk in green, yellow and red.',
-			'Review rounds and a spotlight critique.',
-		],
-	},
+	{ slug: 'rhythm-and-rhyme', title: 'Rhythm and Rhyme' },
+	{ slug: 'the-volume-dial', title: 'The Volume Dial' },
+	{ slug: 'exit-and-enter-swing', title: 'Exit and Enter Swing' },
 ];
 
 export const coachingPageCopy = {
@@ -148,10 +104,11 @@ export const coachingPageCopy = {
 		conventions: 'Invite me to your event',
 	} as Record<string, string>,
 	venuesHeading: 'Where I teach',
-	workshopsHeading: 'The workshop series',
+	workshopsHeading: 'With workshops like…',
 	paymentNote: 'Pay by cash or Venmo, monthly or per session.',
 	drillLibrary: {
 		headline: 'Drill library',
-		introduction: 'A few of the drills I give students. Each one isolates a single skill, so you can practise it alone in a few minutes a day.',
+		emailLabel: 'Ask about the drill library',
+		introduction: 'My drills cover four areas. Each drill isolates a single skill, so you can practise it alone in a few minutes a day.',
 	},
 };

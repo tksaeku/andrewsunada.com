@@ -12,7 +12,14 @@ describe('SocialLinks', () => {
 		const links = screen.getAllByRole('link');
 		expect(links).toHaveLength(2);
 		expect(screen.getByRole('link', { name: 'Instagram' })).toHaveAttribute('href', 'https://www.instagram.com/andrewsunada/');
-		expect(links.every((link) => link.getAttribute('rel') === 'me noopener')).toBe(true);
+		expect(links.every((link) => link.getAttribute('rel') === 'me noopener noreferrer' && link.getAttribute('target') === '_blank')).toBe(true);
+	});
+
+	it('opens a mailto link in the same tab', () => {
+		render(SocialLinks, { links: [{ name: 'Email', url: 'mailto:andrew@andrewsunada.com' }] });
+		const email = screen.getByRole('link', { name: 'Email' });
+		expect(email).not.toHaveAttribute('target');
+		expect(email).not.toHaveAttribute('rel');
 	});
 
 	it('renders no anchor for a link without a url', () => {

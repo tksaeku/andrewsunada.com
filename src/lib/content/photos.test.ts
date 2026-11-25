@@ -3,7 +3,7 @@ import { sitePhotos } from './photos';
 describe('sitePhotos', () => {
 	it('has every photo the pages use', () => {
 		expect(Object.keys(sitePhotos).sort()).toEqual([
-			'bio', 'coachingLessons', 'coachingWorkshops', 'contact', 'dance', 'danceHeader', 'hero', 'professional',
+			'coachingLessons', 'coachingWorkshops', 'contact', 'dance', 'danceHeader', 'hero', 'professional',
 		]);
 	});
 

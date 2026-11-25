@@ -1,5 +1,4 @@
 import type { Picture } from 'vite-imagetools';
-import bioSource from '$lib/images/andrew-sunada-haori.jpg?enhanced';
 import coachingLessonsSource from '$lib/images/andrew-sunada-dance-point.jpg?enhanced';
 import coachingWorkshopsSource from '$lib/images/andrew-sunada-dance-arms-extended.jpg?enhanced';
 import contactSource from '$lib/images/andrew-sunada-seated-white-tee.jpg?enhanced';
@@ -38,7 +37,7 @@ export const sitePhotos: Record<string, SitePhoto> = {
 		key: 'coachingWorkshops',
 		source: coachingWorkshopsSource,
 		alt: 'Andrew Sunada mid-step with both arms extended, a stage light flaring behind him',
-		caption: 'Workshops and bootcamps',
+		caption: 'Workshops',
 	},
 	danceHeader: {
 		key: 'danceHeader',
@@ -51,12 +50,6 @@ export const sitePhotos: Record<string, SitePhoto> = {
 		source: professionalSource,
 		alt: 'Andrew Sunada smiling in a grey blazer against a light background',
 		caption: 'Engineering',
-	},
-	bio: {
-		key: 'bio',
-		source: bioSource,
-		alt: 'Andrew Sunada standing in a patterned haori and geta, hands folded',
-		caption: 'Practice and patience',
 	},
 	contact: {
 		key: 'contact',

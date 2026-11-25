@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/svelte';
 import { studentRateDefinition } from '$lib/content/coaching';
-import { lessonContactPath, privateLessonBookingUrl } from '$lib/content/site';
+import { drillLibraryEmailUrl, lessonBookingEmailUrl, privateLessonBookingUrl } from '$lib/content/site';
 import CoachingPage from './+page.svelte';
 
 const getSection = (container: HTMLElement, id: string): HTMLElement => {
@@ -32,19 +32,18 @@ describe('Coaching page', () => {
 		});
 	});
 
-	it('links both venues with their loose schedule', () => {
+	it('links both venues without a schedule', () => {
 		const { container } = render(CoachingPage);
 		expect(screen.getByRole('link', { name: 'Dance with Joy Studios' })).toBeInTheDocument();
 		expect(screen.getByRole('link', { name: 'Norse Hall' })).toBeInTheDocument();
-		expect(container.textContent).toContain('some Saturdays');
-		expect(container.textContent).toContain('some Wednesdays');
+		expect(container.textContent).not.toMatch(/some (Saturdays|Wednesdays)/);
 	});
 
 	it('books private lessons through the booking button', () => {
 		const { container } = render(CoachingPage);
 		const privateLessons = getSection(container, 'private-lessons');
 		const bookingLink = [...privateLessons.querySelectorAll('a')].find((link) => link.textContent?.trim() === 'Book a lesson');
-		expect(bookingLink).toHaveAttribute('href', privateLessonBookingUrl || lessonContactPath);
+		expect(bookingLink).toHaveAttribute('href', privateLessonBookingUrl || lessonBookingEmailUrl);
 	});
 
 	it('sends the other offers to the contact form with their topic', () => {
@@ -57,5 +56,14 @@ describe('Coaching page', () => {
 	it('never calls monthly coaching a plan', () => {
 		const { container } = render(CoachingPage);
 		expect(container.textContent?.toLowerCase()).not.toContain('monthly plan');
+	});
+
+	it('shows the four drill topics and an email link for the drill library', () => {
+		const { container } = render(CoachingPage);
+		const drillSection = getSection(container, 'drills');
+		const topicHeadings = [...drillSection.querySelectorAll('h3')].map((heading) => heading.textContent);
+		expect(topicHeadings).toEqual(['Weight transfer', 'Rhythm and feetwork', 'Connection', 'Swing and shape']);
+		expect(drillSection.querySelector('dl')).toBeNull();
+		expect(getHrefs(drillSection)).toEqual([drillLibraryEmailUrl]);
 	});
 });

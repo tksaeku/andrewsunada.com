@@ -15,12 +15,12 @@ export const homeCopy = {
 	},
 	dance: {
 		label: 'Dance',
-		headline: 'Competing in the All-Stars.',
+		headline: 'Competing at events!',
 		linkLabel: 'More competition videos',
 	},
 	engineering: {
 		label: 'Engineering',
-		headline: 'The same care, a different medium.',
+		headline: 'Building great solutions to real problems.',
 		appsLinkLabel: 'See the apps',
 		resumeLinkLabel: 'Read the resume',
 	},

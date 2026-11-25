@@ -57,7 +57,7 @@ describe('other builders', () => {
 	it('builds one SoftwareApplication per app and links only apps with a url', () => {
 		const applications = buildSoftwareApplications(appProjects);
 		expect(applications).toHaveLength(4);
-		expect(applications.filter((application) => 'url' in application)).toHaveLength(2);
+		expect(applications.filter((application) => 'url' in application)).toHaveLength(appProjects.filter(({ linkUrl }) => linkUrl !== '').length);
 	});
 
 	it('types the website, profile and contact pages', () => {

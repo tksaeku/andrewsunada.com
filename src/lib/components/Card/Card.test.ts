@@ -12,10 +12,18 @@ describe('Card', () => {
 		expect(screen.getByText('Card body')).toBeInTheDocument();
 	});
 
-	it('marks an external link noopener', () => {
+	it('opens an external link in a new tab', () => {
 		render(Card, { title: 'Meeko', href: 'https://www.meekoapp.com', children });
 		const link = screen.getByRole('link', { name: 'Meeko' });
 		expect(link).toHaveAttribute('href', 'https://www.meekoapp.com');
-		expect(link).toHaveAttribute('rel', 'noopener');
+		expect(link).toHaveAttribute('target', '_blank');
+		expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+	});
+
+	it('keeps an internal link in the same tab', () => {
+		render(Card, { title: 'Apps', href: '/apps/', children });
+		const link = screen.getByRole('link', { name: 'Apps' });
+		expect(link).not.toHaveAttribute('target');
+		expect(link).not.toHaveAttribute('rel');
 	});
 });

@@ -102,7 +102,7 @@ export const buildVideoObjects = (videos: Video[]): VideoObjectJsonLd[] => {
 	return videos.map((video) => ({
 		'@context': schemaContext,
 		'@type': 'VideoObject',
-		name: `${personName} — ${getVideoLabel(video)}`,
+		name: getVideoLabel(video),
 		description: `${personName} competing at ${video.event} ${video.year}: ${video.title}.`,
 		thumbnailUrl: getVideoThumbnailUrl(video),
 		uploadDate: video.uploadedAt,

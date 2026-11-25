@@ -34,7 +34,7 @@
 	<figcaption class="caption">
 		<span class="event">{video.event} {video.year}</span>
 		<span class="title">{video.title}</span>
-		<a class="watch-link" href={getVideoWatchUrl(video)} rel="noopener">Watch on YouTube</a>
+		<a class="watch-link" href={getVideoWatchUrl(video)} target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
 	</figcaption>
 </figure>
 

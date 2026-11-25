@@ -18,9 +18,9 @@ export const appProjects: AppProject[] = [
 		name: 'TK Wallet',
 		pitch: 'A household finance app that syncs bank accounts, sorts transactions with rules, tags and categories, and tells the story of where the money goes.',
 		stack: ['React', 'Express', 'TypeScript', 'MongoDB', 'Plaid', 'Auth0'],
-		status: 'In household use',
-		linkUrl: '',
-		linkLabel: '',
+		status: 'Live',
+		linkUrl: 'https://tkwallet.me/home',
+		linkLabel: 'Visit tkwallet.me',
 	},
 	{
 		slug: 'wemove',

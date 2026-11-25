@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SocialLinks from '$lib/components/SocialLinks/SocialLinks.svelte';
-	import { personName, photographerCredit, socialLinks } from '$lib/content/site';
+	import { footerLinks, personName, photographerCredit } from '$lib/content/site';
 
 	const currentYear = new Date().getFullYear();
 </script>
@@ -9,10 +9,10 @@
 	<div class="inner">
 		<div class="meta">
 			<p>© {currentYear} {personName}</p>
-			<p>Photography by <a href={photographerCredit.url} rel="noopener">{photographerCredit.name}</a></p>
+			<p>Photography by <a href={photographerCredit.url} target="_blank" rel="noopener noreferrer">{photographerCredit.name}</a></p>
 		</div>
 		<nav aria-label="Profiles">
-			<SocialLinks links={socialLinks} />
+			<SocialLinks links={footerLinks} />
 		</nav>
 	</div>
 </footer>

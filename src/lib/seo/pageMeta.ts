@@ -20,7 +20,7 @@ export const pageMetaByPath: Record<string, PageMeta> = {
 		path: '/dance/',
 		title: 'Competition dancing and WSDC record · Andrew Sunada',
 		description:
-			'Andrew Sunada competes in the WSDC All-Stars division. Watch his Jack and Jill and Strictly competition videos and see his podium finishes.',
+			'Andrew Sunada competes in the WSDC All-Stars division. Watch his Jack and Jill and Strictly competition videos.',
 		breadcrumbLabel: 'Dance',
 	},
 	'/apps/': {

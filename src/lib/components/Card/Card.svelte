@@ -20,7 +20,7 @@
 	{/if}
 	<h3 class="title">
 		{#if hasLink}
-			<a {href} rel={isExternal ? 'noopener' : undefined}>{title}</a>
+			<a {href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>{title}</a>
 		{:else}
 			{title}
 		{/if}

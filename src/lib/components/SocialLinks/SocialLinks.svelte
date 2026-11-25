@@ -4,12 +4,18 @@
 
 	const { links, isLarge = false }: { links: SocialLink[]; isLarge?: boolean } = $props();
 	const visibleLinks = $derived(getVisibleSocialLinks(links));
+
+	const isExternalUrl = (url: string): boolean => /^https?:\/\//.test(url);
 </script>
 
 <ul class="social-links" class:is-large={isLarge}>
 	{#each visibleLinks as link (link.name)}
 		<li>
-			<a href={link.url} rel="me noopener">{link.name}</a>
+			{#if isExternalUrl(link.url)}
+				<a href={link.url} target="_blank" rel="me noopener noreferrer">{link.name}</a>
+			{:else}
+				<a href={link.url}>{link.name}</a>
+			{/if}
 		</li>
 	{/each}
 </ul>

@@ -5,7 +5,7 @@
 	const isExternal = $derived(/^https?:\/\//.test(href));
 </script>
 
-<a class="arrow-link" {href} rel={isExternal ? 'noopener' : undefined}>
+<a class="arrow-link" {href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>
 	{@render children()}
 	<svg class="arrow" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
 		<path d="M3 13 13 3M6 3h7v7" fill="none" stroke="currentColor" stroke-width="1.4" />

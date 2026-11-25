@@ -37,7 +37,7 @@ export const buildLlmsText = (): string => {
 		return [`- **${offer.title}** — ${offer.summary}`, ...rateLines].join('\n');
 	});
 	const venueLines = venues.map((venue) => {
-		return `- ${venue.name} (${venue.url}), ${venue.locality}, ${venue.region}: ${venue.schedule}`;
+		return `- ${venue.name} (${venue.url}), ${venue.locality}, ${venue.region}`;
 	});
 	const pageLines = Object.values(pageMetaByPath).map((meta) => {
 		return `- [${meta.breadcrumbLabel}](${getCanonicalUrl(meta.path)}): ${meta.description}`;
