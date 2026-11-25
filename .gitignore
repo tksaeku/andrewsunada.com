@@ -6,5 +6,4 @@ build/
 .svelte-kit/
 .env*
 !.env.example
-.DS_Store
 docs/research/

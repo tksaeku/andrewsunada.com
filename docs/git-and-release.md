@@ -32,7 +32,7 @@ Ask Andrew before pushing, opening a pull request, merging, or touching DreamHos
 - `docs/research/` and `assets/photos/` are git-ignored and stay that way.
 - No student names, coach or partner names from private notes, home address, phone number, or email address other than `andrew@andrewsunada.com`. Partner names that appear in public YouTube titles are allowed in `videos.ts`.
 - `.env*` files other than `.env.example`.
-- `.DS_Store` is listed in `.gitignore`, but a copy at the repo root is tracked, and Git keeps tracking a file it already tracks. Leave it out of commits, or untrack it with `git rm --cached .DS_Store`.
+- `.DS_Store` files. They are git-ignored.
 
 ## Conventions
 
