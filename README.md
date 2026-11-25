@@ -34,7 +34,7 @@ The workflow reads:
 | Secret | `DREAMHOST_PATH` | The web directory, `/home/<user>/andrewsunada.com/public` |
 | Variable | `PUBLIC_CONTACT_FORM_ENDPOINT` | Formspree form URL |
 | Variable | `PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key |
-| Variable | `PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional Search Console token |
+| Variable | `PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional Search Console token; unused while the domain is verified by DNS (see [docs/search-indexing.md](docs/search-indexing.md)) |
 
 The deploy refuses to run if a secret is empty or `DREAMHOST_PATH` is not the `andrewsunada.com/public` web directory.
 
