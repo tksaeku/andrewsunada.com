@@ -3,8 +3,8 @@
 ## Repository
 
 - Public GitHub repo: `tksaeku/andrewsunada.com`. Use the `gh` CLI for pull requests, Actions runs, secrets and variables.
-- `main` is the live site. The rebuild is on `feat/site-rebuild`.
-- There is no local `main` branch. Compare against the remote: `git log --oneline origin/main..HEAD`.
+- `main` is the live site. Work on a feature branch named per `/tkgithub` and merge to `main` to release.
+- `archive/old-main` keeps the previous site's history. Leave it alone.
 - `dev`, `rework`, `feat/image`, `update/design` and `reset` hold previous sites, and `dev` history contains old credentials. Never merge, rebase onto or cherry-pick from them.
 
 ## Release
