@@ -73,9 +73,9 @@ jobs:
             fi
           done
           case "$DREAMHOST_PATH" in
-            /home/*/andrewsunada.com|/home/*/www.andrewsunada.com) ;;
+            /home/*/andrewsunada.com/public) ;;
             *)
-              echo "::error::DREAMHOST_PATH must be the site directory, /home/<user>/andrewsunada.com"
+              echo "::error::DREAMHOST_PATH must be the web directory, /home/<user>/andrewsunada.com/public"
               exit 1
               ;;
           esac

@@ -1,5 +1,4 @@
 .DS_Store
-docs/research/
 assets/photos/
 .superpowers/
 node_modules/
@@ -8,3 +7,4 @@ build/
 .env*
 !.env.example
 .DS_Store
+docs/research/

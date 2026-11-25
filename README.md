@@ -31,13 +31,13 @@ The workflow reads:
 | Secret | `DREAMHOST_KNOWN_HOSTS` | The server's pinned host key line (`ssh-keyscan` output, checked by hand) |
 | Secret | `DREAMHOST_HOST` | The DreamHost SSH hostname |
 | Secret | `DREAMHOST_USER` | The DreamHost shell user |
-| Secret | `DREAMHOST_PATH` | The site directory, `/home/<user>/andrewsunada.com` |
+| Secret | `DREAMHOST_PATH` | The web directory, `/home/<user>/andrewsunada.com/public` |
 | Variable | `PUBLIC_CONTACT_FORM_ENDPOINT` | Formspree form URL |
 | Variable | `PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key |
 | Variable | `PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional Search Console token |
 
-The deploy refuses to run if a secret is empty or `DREAMHOST_PATH` is not an `andrewsunada.com` site directory.
+The deploy refuses to run if a secret is empty or `DREAMHOST_PATH` is not the `andrewsunada.com/public` web directory.
 
 ## Content
 
-Copy, rates, videos, apps and resume entries live in `src/lib/content/`. See `CLAUDE.md` for the editing guide.
+Copy, rates, videos, apps and resume entries live in `src/lib/content/`. See [docs/content.md](docs/content.md) for the editing guide and `CLAUDE.md` for the index of all docs.
