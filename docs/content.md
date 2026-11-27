@@ -60,14 +60,14 @@ Internal links and `mailto:` links open in the same tab.
 
 ## Apps
 
-Each entry in `apps.ts` has a `status` shown as the card's eyebrow, and an optional `linkUrl` with `linkLabel`. A non-empty `linkUrl` links the card title, shows the label with an arrow, and adds `url` to the app's `SoftwareApplication` JSON-LD.
+Each entry in `apps.ts` has a `status` shown as the card's eyebrow, an optional `linkUrl` with `linkLabel`, and an optional `codeUrl` with `codeLabel`. A non-empty `linkUrl` links the card title, shows the label with an arrow, and adds `url` to the app's `SoftwareApplication` JSON-LD. A non-empty `codeUrl` adds a second link on the `/apps/` card to the app's source. Set `codeUrl` only for public repos.
 
-| App | Status | Link |
-|---|---|---|
-| Meeko | Live | https://www.meekoapp.com |
-| TK Wallet | Live | https://tkwallet.me/home |
-| WeMove | Paused | none |
-| Bingo | Open source | https://github.com/tksaeku/bingo |
+| App | Status | Link | Code |
+|---|---|---|---|
+| Meeko | Live | https://www.meekoapp.com | none (private repo) |
+| TK Wallet | Live | https://tkwallet.me/home | none (private repo) |
+| WeMove | Paused | none | none |
+| Bingo | Live | https://bingo.wemove.dance | https://github.com/tksaeku/bingo |
 
 To find an app's live address, read the deploy notes in that app's own repo (`~/Projects/<app>/.claude/specs/deploy.md` or its `CLAUDE.md`), then confirm it answers with `curl -s -o /dev/null -w '%{http_code}' <url>`. Domain-looking strings in env files are not reliable: `https://tkwallet.com` is TK Wallet's Auth0 API audience identifier, not a website, and does not resolve.
 

@@ -25,6 +25,12 @@ describe('Apps page', () => {
 		expect(getCard(container, 'WeMove').querySelector('a')).toBeNull();
 	});
 
+	it('links Bingo to its live site and its public repository', () => {
+		const { container } = render(AppsPage);
+		const hrefs = Array.from(getCard(container, 'Bingo').querySelectorAll('a')).map((link) => link.getAttribute('href'));
+		expect(hrefs).toEqual(['https://bingo.wemove.dance', 'https://github.com/tksaeku/bingo']);
+	});
+
 	it('links the GitHub profile', () => {
 		render(AppsPage);
 		expect(screen.getAllByRole('link').some((link) => link.getAttribute('href') === 'https://github.com/tksaeku')).toBe(true);

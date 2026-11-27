@@ -53,6 +53,8 @@ export type AppProject = {
 	status: string;
 	linkUrl: string;
 	linkLabel: string;
+	codeUrl: string;
+	codeLabel: string;
 };
 
 export type ResumeRole = {

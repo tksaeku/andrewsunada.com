@@ -25,8 +25,15 @@
 						<li>{technology}</li>
 					{/each}
 				</ul>
-				{#if app.linkLabel}
-					<p class="link-label" aria-hidden="true">{app.linkLabel} ↗</p>
+				{#if app.linkLabel || app.codeUrl}
+					<div class="link-row">
+						{#if app.linkLabel}
+							<p class="link-label" aria-hidden="true">{app.linkLabel} ↗</p>
+						{/if}
+						{#if app.codeUrl}
+							<a class="link-label code-link" href={app.codeUrl} target="_blank" rel="noopener noreferrer">{app.codeLabel} ↗</a>
+						{/if}
+					</div>
 				{/if}
 			</Card>
 		{/each}
@@ -70,10 +77,27 @@
 		}
 	}
 
+	.link-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
+	}
+
 	.link-label {
 		@include small-label;
 		color: $shu;
 		font-size: 0.6875rem;
+	}
+
+	// Sits above the card title's full-card hit area so it opens its own URL.
+	.code-link {
+		position: relative;
+		z-index: 1;
+		text-decoration: none;
+
+		&:hover {
+			color: $sumi;
+		}
 	}
 
 	.lead {

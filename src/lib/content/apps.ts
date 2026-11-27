@@ -12,6 +12,8 @@ export const appProjects: AppProject[] = [
 		status: 'Live',
 		linkUrl: 'https://www.meekoapp.com',
 		linkLabel: 'Visit meekoapp.com',
+		codeUrl: '',
+		codeLabel: '',
 	},
 	{
 		slug: 'tk-wallet',
@@ -21,6 +23,8 @@ export const appProjects: AppProject[] = [
 		status: 'Live',
 		linkUrl: 'https://tkwallet.me/home',
 		linkLabel: 'Visit tkwallet.me',
+		codeUrl: '',
+		codeLabel: '',
 	},
 	{
 		slug: 'wemove',
@@ -30,15 +34,19 @@ export const appProjects: AppProject[] = [
 		status: 'Paused',
 		linkUrl: '',
 		linkLabel: '',
+		codeUrl: '',
+		codeLabel: '',
 	},
 	{
 		slug: 'bingo',
 		name: 'Bingo',
-		pitch: 'A full-stack bingo game with custom board options and a leaderboard.',
-		stack: ['React', 'TypeScript', 'SCSS', 'Node', 'Firebase'],
-		status: 'Open source',
-		linkUrl: 'https://github.com/tksaeku/bingo',
-		linkLabel: 'View the code on GitHub',
+		pitch: 'A 5×5 bingo game for The Open: boards saved across reloads, automatic win detection, a shared leaderboard, and first-party analytics with no cookies or third-party scripts.',
+		stack: ['React 19', 'Express 5', 'TypeScript', 'Firestore', 'Firebase App Hosting'],
+		status: 'Live',
+		linkUrl: 'https://bingo.wemove.dance',
+		linkLabel: 'Play at bingo.wemove.dance',
+		codeUrl: 'https://github.com/tksaeku/bingo',
+		codeLabel: 'View the code on GitHub',
 	},
 ];
 

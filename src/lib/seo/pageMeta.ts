@@ -27,7 +27,7 @@ export const pageMetaByPath: Record<string, PageMeta> = {
 		path: '/apps/',
 		title: 'Apps and software projects · Andrew Sunada',
 		description:
-			'Apps Andrew Sunada builds and runs: Meeko for nanny pay records, TK Wallet for household finance, WeMove for dancers, and Bingo.',
+			'Apps Andrew Sunada builds and runs: Meeko for nanny pay records, TK Wallet for household finance, WeMove for dancers, and Bingo for The Open.',
 		breadcrumbLabel: 'Apps',
 	},
 	'/resume/': {

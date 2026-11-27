@@ -15,7 +15,14 @@ describe('appProjects', () => {
 		expect(linkUrlByName.WeMove).toBe('');
 	});
 
-	it('links Bingo to its public repository', () => {
-		expect(appProjects.find(({ name }) => name === 'Bingo')?.linkUrl).toBe('https://github.com/tksaeku/bingo');
+	it('links Bingo to its live site and its public repository', () => {
+		const bingo = appProjects.find(({ name }) => name === 'Bingo');
+		expect(bingo?.linkUrl).toBe('https://bingo.wemove.dance');
+		expect(bingo?.codeUrl).toBe('https://github.com/tksaeku/bingo');
+	});
+
+	it('links code only for public repositories', () => {
+		const namesWithCode = appProjects.filter(({ codeUrl }) => codeUrl !== '').map(({ name }) => name);
+		expect(namesWithCode).toEqual(['Bingo']);
 	});
 });
