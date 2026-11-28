@@ -14,6 +14,11 @@ export const contactTopicLabels: Record<ContactTopic, string> = {
 };
 
 const contactTopics = Object.values(ContactTopic);
+
+/** The topic's label, or `General` when the visitor chose none. */
+export const getContactTopicLabel = (topic: ContactTopic | ''): string => {
+	return topic === '' ? 'General' : contactTopicLabels[topic];
+};
 const minimumMessageLength = 10;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -68,7 +73,7 @@ export const submitContactForm = async (
 	}
 
 	const trimmedValues = trimValues(values);
-	const topicLabel = trimmedValues.topic === '' ? 'General' : contactTopicLabels[trimmedValues.topic];
+	const topicLabel = getContactTopicLabel(trimmedValues.topic);
 
 	try {
 		const response = await fetch(endpoint, {

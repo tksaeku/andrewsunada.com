@@ -69,3 +69,7 @@ export type ResumeRole = {
 export type ResumeSkillGroup = { label: string; items: string[] };
 
 export type ResumeEducation = { school: string; degree: string; year: string; note?: string };
+
+export type ExternalLink = { label: string; url: string };
+
+export type PrivacySection = { heading: string; paragraphs: string[]; links: ExternalLink[] };

@@ -30,4 +30,9 @@ describe('Footer', () => {
 		expect(credit).toHaveAttribute('href', 'https://dougsilton.com/');
 		expect(container.textContent).toMatch(/Photography by\s*Doug Silton/);
 	});
+
+	it('links the privacy page', () => {
+		render(Footer);
+		expect(screen.getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy/');
+	});
 });

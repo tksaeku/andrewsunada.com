@@ -70,8 +70,8 @@ describe('other builders', () => {
 describe('pageMetaByPath', () => {
 	const metas = Object.values(pageMetaByPath);
 
-	it('covers the six routes', () => {
-		expect(Object.keys(pageMetaByPath)).toEqual(['/', '/coaching/', '/dance/', '/apps/', '/resume/', '/contact/']);
+	it('covers the seven routes', () => {
+		expect(Object.keys(pageMetaByPath)).toEqual(['/', '/coaching/', '/dance/', '/apps/', '/resume/', '/contact/', '/privacy/']);
 	});
 
 	it('gives every page a unique title of 60 characters or fewer', () => {

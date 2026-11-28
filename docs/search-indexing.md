@@ -6,7 +6,7 @@ How Google, Gemini and other search and AI tools find the site, and what to do a
 
 Every page carries a title, description, canonical link, Open Graph and Twitter tags, and JSON-LD; see [content.md](content.md) for where those come from. The build also writes:
 
-- `sitemap.xml`: the six routes at their `https://www.andrewsunada.com/` addresses, served as `application/xml`
+- `sitemap.xml`: the seven routes at their `https://www.andrewsunada.com/` addresses, served as `application/xml`
 - `robots.txt`: allows every crawler, names GPTBot, ClaudeBot, PerplexityBot and Google-Extended explicitly, and points to the sitemap
 - `llms.txt`: a plain-text summary for AI tools
 

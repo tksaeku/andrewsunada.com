@@ -1,3 +1,4 @@
+import { SiteArea } from '$lib/analytics/types';
 import { siteOrigin } from '$lib/content/site';
 import type { PageMeta } from './types';
 
@@ -44,6 +45,31 @@ export const pageMetaByPath: Record<string, PageMeta> = {
 			'Book a private West Coast Swing lesson or ask Andrew Sunada about monthly coaching, workshops, convention staffing or software work.',
 		breadcrumbLabel: 'Contact',
 	},
+	'/privacy/': {
+		path: '/privacy/',
+		title: 'Privacy · Andrew Sunada',
+		description:
+			'What andrewsunada.com collects with Google Analytics, what happens to contact messages, and how to opt out.',
+		breadcrumbLabel: 'Privacy',
+	},
+};
+
+/** The site area of each page in `pageMetaByPath`, used to group analytics reports. */
+export const siteAreaByPath: Record<string, SiteArea> = {
+	'/': SiteArea.Home,
+	'/coaching/': SiteArea.Coaching,
+	'/dance/': SiteArea.Coaching,
+	'/apps/': SiteArea.Software,
+	'/resume/': SiteArea.Software,
+	'/contact/': SiteArea.Contact,
+	'/privacy/': SiteArea.Site,
+};
+
+/**
+ * Returns the site area for a path. Any path that is not a page of the site belongs to the not-found area.
+ */
+export const getSiteArea = (path: string): SiteArea => {
+	return siteAreaByPath[path] ?? SiteArea.NotFound;
 };
 
 export const getCanonicalUrl = (path: string): string => {

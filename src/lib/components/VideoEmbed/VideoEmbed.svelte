@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { trackEvent } from '$lib/analytics/tracking';
+	import { AnalyticsEventName } from '$lib/analytics/types';
 	import type { Video } from '$lib/content/types';
 	import { getVideoLabel, getVideoThumbnailUrl, getVideoWatchUrl } from '$lib/content/videos';
 
@@ -11,6 +13,7 @@
 
 	const play = (): void => {
 		isPlaying = true;
+		trackEvent(AnalyticsEventName.VideoPlay, { video_id: video.youtubeId, video_title: video.title });
 	};
 </script>
 

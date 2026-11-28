@@ -20,6 +20,7 @@ jobs:
       PUBLIC_CONTACT_FORM_ENDPOINT: ${{ vars.PUBLIC_CONTACT_FORM_ENDPOINT }}
       PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
       PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ vars.PUBLIC_GOOGLE_SITE_VERIFICATION }}
+      PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7

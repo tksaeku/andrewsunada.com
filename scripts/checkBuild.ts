@@ -2,8 +2,11 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { JSDOM } from 'jsdom';
+import { loadEnv } from 'vite';
+import { getGtagScriptUrl, getMeasurementId } from '../src/lib/analytics/gtagSnippet';
 import { appsPageCopy } from '../src/lib/content/apps';
 import { coachingPageCopy } from '../src/lib/content/coaching';
+import { privacyPageCopy } from '../src/lib/content/privacyPolicy';
 import { contactPageCopy, navigationItems } from '../src/lib/content/site';
 import { dancePageCopy } from '../src/lib/content/wsdc';
 
@@ -20,6 +23,7 @@ const expectedRoutes: { filePath: string; heading: string }[] = [
 	{ filePath: 'apps/index.html', heading: appsPageCopy.headline },
 	{ filePath: 'resume/index.html', heading: 'Resume' },
 	{ filePath: 'contact/index.html', heading: contactPageCopy.headline },
+	{ filePath: 'privacy/index.html', heading: privacyPageCopy.headline },
 ];
 
 const requiredSiteFiles = ['404.html', 'sitemap.xml', 'robots.txt', 'llms.txt', 'site.webmanifest', '.htaccess'];
@@ -124,6 +128,33 @@ export const findRelativeAssetReferences = (html: string): string[] => {
 		.filter((url): url is string => url !== null && (url.startsWith('./') || url.startsWith('../')));
 };
 
+/**
+ * Lists the analytics problems in one prerendered page. With a measurement ID the page must load gtag.js
+ * asynchronously and carry the bootstrap for that ID; without one it must carry neither.
+ */
+export const findAnalyticsProblems = (html: string, measurementId: string): string[] => {
+	const document = new JSDOM(html).window.document;
+	const loaders = [...document.querySelectorAll('script[src*="googletagmanager.com"]')];
+	const bootstraps = [...document.querySelectorAll('script:not([src])')]
+		.filter((script) => (script.textContent ?? '').includes("window.gtag('config'"));
+
+	if (measurementId === '') {
+		return loaders.length > 0 || bootstraps.length > 0 ? ['analytics tag present without PUBLIC_GA_MEASUREMENT_ID'] : [];
+	}
+
+	const problems: string[] = [];
+	const hasAsyncLoader = loaders.some((script) => {
+		return script.getAttribute('src') === getGtagScriptUrl(measurementId) && script.hasAttribute('async');
+	});
+	if (!hasAsyncLoader) {
+		problems.push(`missing async gtag.js loader for ${measurementId}`);
+	}
+	if (!bootstraps.some((script) => (script.textContent ?? '').includes(`'${measurementId}'`))) {
+		problems.push(`missing gtag bootstrap for ${measurementId}`);
+	}
+	return problems;
+};
+
 export const findForbiddenText = (text: string): string[] => {
 	return forbiddenFragments.filter((fragment) => text.includes(fragment));
 };
@@ -139,7 +170,7 @@ const getIsTextFile = (filePath: string): boolean => {
 	return textFileExtensions.some((extension) => filePath.endsWith(extension));
 };
 
-const checkBuild = (buildDirectory: string): string[] => {
+const checkBuild = (buildDirectory: string, measurementId: string): string[] => {
 	if (!existsSync(buildDirectory)) {
 		return [`${buildDirectory} does not exist; run npm run build first`];
 	}
@@ -179,6 +210,10 @@ const checkBuild = (buildDirectory: string): string[] => {
 		: [];
 	const notFoundProblems = [...notFoundHeadingProblems, ...notFoundAssetProblems];
 
+	const analyticsProblems = pages.flatMap(({ filePath, html }) => {
+		return findAnalyticsProblems(html, measurementId).map((problem) => `${filePath}: ${problem}`);
+	});
+
 	const brokenLinks = findBrokenInternalLinks(pages, existingFiles).map((problem) => `broken link: ${problem}`);
 
 	const forbiddenText = existingFiles.filter(getIsTextFile).flatMap((filePath) => {
@@ -186,7 +221,7 @@ const checkBuild = (buildDirectory: string): string[] => {
 		return findForbiddenText(text).map((fragment) => `${filePath}: contains "${fragment}"`);
 	});
 
-	return [...missingFiles, ...routeProblems, ...notFoundProblems, ...brokenLinks, ...forbiddenText];
+	return [...missingFiles, ...routeProblems, ...notFoundProblems, ...analyticsProblems, ...brokenLinks, ...forbiddenText];
 };
 
 const getIsRunDirectly = (): boolean => {
@@ -194,7 +229,9 @@ const getIsRunDirectly = (): boolean => {
 };
 
 if (getIsRunDirectly()) {
-	const problems = checkBuild(join(process.cwd(), 'build'));
+	// The same environment the production build read: .env files plus exported variables.
+	const buildEnvironment = loadEnv('production', process.cwd(), 'PUBLIC_');
+	const problems = checkBuild(join(process.cwd(), 'build'), getMeasurementId(buildEnvironment.PUBLIC_GA_MEASUREMENT_ID));
 	if (problems.length > 0) {
 		console.error(`Build check found ${problems.length} problem(s):`);
 		problems.forEach((problem) => {
@@ -202,5 +239,5 @@ if (getIsRunDirectly()) {
 		});
 		process.exit(1);
 	}
-	console.log('Build check passed: routes, metadata, links and site files are in place.');
+	console.log('Build check passed: routes, metadata, analytics, links and site files are in place.');
 }

@@ -1,3 +1,7 @@
+import { trackEvent } from '$lib/analytics/tracking';
+import { AnalyticsEventName, LeadMethod, LeadType } from '$lib/analytics/types';
+
+const calendlyOrigin = 'https://calendly.com';
 const widgetScriptUrl = 'https://assets.calendly.com/assets/external/widget.js';
 const widgetStylesheetUrl = 'https://assets.calendly.com/assets/external/widget.css';
 
@@ -9,6 +13,7 @@ declare global {
 	}
 }
 
+let isListeningForBookings = false;
 let widgetPromise: Promise<void> | null = null;
 let widgetScript: HTMLScriptElement | null = null;
 
@@ -57,14 +62,41 @@ export const loadCalendlyWidget = (): Promise<void> => {
 };
 
 /**
- * Opens the Calendly scheduling pop-up for the given booking page. Rejects when the widget cannot load.
+ * Reports whether a window message is Calendly's notice that the visitor has booked a time.
+ */
+export const getIsCalendlyBookingMessage = (event: MessageEvent): boolean => {
+	const data: unknown = event.data;
+	return event.origin === calendlyOrigin
+		&& typeof data === 'object'
+		&& data !== null
+		&& 'event' in data
+		&& data.event === 'calendly.event_scheduled';
+};
+
+const listenForCalendlyBookings = (): void => {
+	if (isListeningForBookings) {
+		return;
+	}
+	isListeningForBookings = true;
+	window.addEventListener('message', (event) => {
+		if (getIsCalendlyBookingMessage(event)) {
+			trackEvent(AnalyticsEventName.GenerateLead, { method: LeadMethod.Calendly, lead_type: LeadType.Coaching });
+		}
+	});
+};
+
+/**
+ * Opens the Calendly scheduling pop-up for the given booking page and records the opening and any booking
+ * made in it. Rejects when the widget cannot load.
  */
 export const openCalendlyPopup = async (bookingUrl: string): Promise<void> => {
 	await loadCalendlyWidget();
 	if (!window.Calendly) {
 		throw new Error('The Calendly widget loaded without its API.');
 	}
+	listenForCalendlyBookings();
 	window.Calendly.initPopupWidget({ url: bookingUrl });
+	trackEvent(AnalyticsEventName.BookingOpened);
 };
 
 export const browserNavigation = {

@@ -2,7 +2,7 @@
 
 Andrew Sunada's personal site: West Coast Swing coaching first, software portfolio second, everything reachable from one menu. Public GitHub repo: `tksaeku/andrewsunada.com`.
 
-SvelteKit (Svelte 5, TypeScript) prerendered with `adapter-static`, SCSS, Vitest. Six routes (`/`, `/coaching/`, `/dance/`, `/apps/`, `/resume/`, `/contact/`) plus `sitemap.xml`, `robots.txt`, `llms.txt` and a themed `404.html`, served as static files from DreamHost. There is no server.
+SvelteKit (Svelte 5, TypeScript) prerendered with `adapter-static`, SCSS, Vitest. Seven routes (`/`, `/coaching/`, `/dance/`, `/apps/`, `/resume/`, `/contact/`, `/privacy/`) plus `sitemap.xml`, `robots.txt`, `llms.txt` and a themed `404.html`, served as static files from DreamHost. There is no server.
 
 ## Commands
 
@@ -23,6 +23,7 @@ Read the doc for the area you are working in before changing it.
 | [docs/content.md](docs/content.md) | Where all copy lives, email links, external links, apps, coaching and dance page structure, photos |
 | [docs/youtube-videos.md](docs/youtube-videos.md) | Choosing and recording videos: ranking by views, IDs, upload dates, routes that don't work |
 | [docs/git-and-release.md](docs/git-and-release.md) | Branches, deploy on push to `main`, what must never be committed |
+| [docs/analytics.md](docs/analytics.md) | GA4: what is tracked and from where, property settings, reading the reports, UTM tags, excluding your own visits |
 | [docs/search-indexing.md](docs/search-indexing.md) | Search Console, the sitemap, requesting indexing, Gemini and AI crawlers |
 | [docs/photos.md](docs/photos.md) | Photo library catalogue and planned use |
 | [docs/superpowers/specs/2026-11-21-site-rebuild-design.md](docs/superpowers/specs/2026-11-21-site-rebuild-design.md) | The approved site design |

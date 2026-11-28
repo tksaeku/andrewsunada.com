@@ -1,5 +1,6 @@
 <script lang="ts">
 	import SocialLinks from '$lib/components/SocialLinks/SocialLinks.svelte';
+	import { privacyPageCopy, privacyPagePath } from '$lib/content/privacyPolicy';
 	import { footerLinks, personName, photographerCredit } from '$lib/content/site';
 
 	const currentYear = new Date().getFullYear();
@@ -10,6 +11,7 @@
 		<div class="meta">
 			<p>© {currentYear} {personName}</p>
 			<p>Photography by <a href={photographerCredit.url} target="_blank" rel="noopener noreferrer">{photographerCredit.name}</a></p>
+			<p><a href={privacyPagePath}>{privacyPageCopy.footerLinkLabel}</a></p>
 		</div>
 		<nav aria-label="Profiles">
 			<SocialLinks links={footerLinks} />
