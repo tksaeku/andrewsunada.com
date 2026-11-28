@@ -1,11 +1,11 @@
 import { buildLlmsText, buildRobots, buildSitemap } from './siteFiles';
 
 describe('buildSitemap', () => {
-	it('lists the six canonical urls with lastmod', () => {
+	it('lists the seven canonical urls with lastmod', () => {
 		const sitemap = buildSitemap('2026-11-21');
-		expect(sitemap.match(/<loc>/g)).toHaveLength(6);
+		expect(sitemap.match(/<loc>/g)).toHaveLength(7);
 		expect(sitemap).toContain('<loc>https://www.andrewsunada.com/coaching/</loc>');
-		expect(sitemap.match(/<lastmod>2026-11-21<\/lastmod>/g)).toHaveLength(6);
+		expect(sitemap.match(/<lastmod>2026-11-21<\/lastmod>/g)).toHaveLength(7);
 	});
 });
 
@@ -28,6 +28,6 @@ describe('buildLlmsText', () => {
 			.forEach((fragment) => {
 				expect(text).toContain(fragment);
 			});
-		expect(text.match(/\]\(https:\/\/www\.andrewsunada\.com\/[a-z]*\/?\)/g)).toHaveLength(6);
+		expect(text.match(/\]\(https:\/\/www\.andrewsunada\.com\/[a-z]*\/?\)/g)).toHaveLength(7);
 	});
 });

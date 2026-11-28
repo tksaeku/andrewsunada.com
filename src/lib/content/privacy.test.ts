@@ -1,12 +1,13 @@
 import * as apps from './apps';
 import * as coaching from './coaching';
 import * as drills from './drills';
+import * as privacyPolicy from './privacyPolicy';
 import * as resume from './resume';
 import * as site from './site';
 import * as videos from './videos';
 import * as wsdc from './wsdc';
 
-const modules = { apps, coaching, drills, resume, site, videos, wsdc };
+const modules = { apps, coaching, drills, privacyPolicy, resume, site, videos, wsdc };
 
 describe('public content', () => {
 	it.each(Object.entries(modules))('%s never names the old accounts', (_name, contentModule) => {

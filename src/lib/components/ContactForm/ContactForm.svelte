@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { getContactLeadType } from '$lib/analytics/leads';
+	import { trackEvent } from '$lib/analytics/tracking';
+	import { AnalyticsEventName, LeadMethod } from '$lib/analytics/types';
 	import { contactEmail } from '$lib/content/site';
 	import { ContactTopic } from '$lib/content/types';
-	import { contactTopicLabels, submitContactForm, validateContactForm } from './contactSubmission';
+	import { contactTopicLabels, getContactTopicLabel, submitContactForm, validateContactForm } from './contactSubmission';
 	import type { ContactFormErrors, ContactFormValues } from './contactSubmission';
 	import { mountTurnstile } from './turnstile';
 	import type { TurnstileWidget } from './turnstile';
@@ -82,6 +85,11 @@
 
 		if (isSuccessful) {
 			hasSent = true;
+			trackEvent(AnalyticsEventName.GenerateLead, {
+				method: LeadMethod.ContactForm,
+				topic: getContactTopicLabel(values.topic),
+				lead_type: getContactLeadType(values.topic),
+			});
 			return;
 		}
 		hasFailed = true;

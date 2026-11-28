@@ -1,5 +1,6 @@
+import { buildGtagBootstrap } from '../src/lib/analytics/gtagSnippet';
 import {
-	findBrokenInternalLinks, findForbiddenText, findMetadataProblems, findRelativeAssetReferences,
+	findAnalyticsProblems, findBrokenInternalLinks, findForbiddenText, findMetadataProblems, findRelativeAssetReferences,
 } from './checkBuild';
 
 const validHead = `
@@ -91,5 +92,35 @@ describe('findRelativeAssetReferences', () => {
 
 	it('passes root-absolute urls', () => {
 		expect(findRelativeAssetReferences(buildPage('<link href="/_app/a.css">', '<img alt="" src="/_app/c.avif">'))).toEqual([]);
+	});
+});
+
+describe('findAnalyticsProblems', () => {
+	const analyticsHead = (measurementId: string): string => {
+		return `<script async src="https://www.googletagmanager.com/gtag/js?id=${measurementId}"></script>`
+			+ `<script>${buildGtagBootstrap(measurementId)}</script>`;
+	};
+
+	it('passes a page with the loader and bootstrap for the build ID', () => {
+		expect(findAnalyticsProblems(buildPage(analyticsHead('G-TEST123'), ''), 'G-TEST123')).toEqual([]);
+	});
+
+	it('reports a missing tag, or a tag for another ID, when the build had an ID', () => {
+		expect(findAnalyticsProblems(buildPage('', ''), 'G-TEST123')).toEqual([
+			'missing async gtag.js loader for G-TEST123', 'missing gtag bootstrap for G-TEST123',
+		]);
+		expect(findAnalyticsProblems(buildPage(analyticsHead('G-OTHER1'), ''), 'G-TEST123')).toHaveLength(2);
+	});
+
+	it('reports a loader that is not async', () => {
+		const head = `<script src="https://www.googletagmanager.com/gtag/js?id=G-TEST123"></script><script>${buildGtagBootstrap('G-TEST123')}</script>`;
+		expect(findAnalyticsProblems(buildPage(head, ''), 'G-TEST123')).toEqual(['missing async gtag.js loader for G-TEST123']);
+	});
+
+	it('passes a page with no tag and reports one with a tag when the build had no ID', () => {
+		expect(findAnalyticsProblems(buildPage('', ''), '')).toEqual([]);
+		expect(findAnalyticsProblems(buildPage(analyticsHead('G-TEST123'), ''), '')).toEqual([
+			'analytics tag present without PUBLIC_GA_MEASUREMENT_ID',
+		]);
 	});
 });

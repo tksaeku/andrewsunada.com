@@ -1,6 +1,12 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { Snippet } from 'svelte';
+	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
+	import { getMeasurementId } from '$lib/analytics/gtagSnippet';
+	import { listenForLinkClicks } from '$lib/analytics/linkClicks';
+	import { trackPageView } from '$lib/analytics/tracking';
+	import Analytics from '$lib/components/Analytics/Analytics.svelte';
 	import Footer from '$lib/components/Footer/Footer.svelte';
 	import Header from '$lib/components/Header/Header.svelte';
 	import Seo from '$lib/components/Seo/Seo.svelte';
@@ -19,11 +25,22 @@
 		const breadcrumbs = pageMeta.path === '/' ? [] : [buildBreadcrumbList(pageMeta)];
 		return [buildWebSite(), buildPerson(), ...breadcrumbs, ...(page.data.structuredData ?? [])];
 	});
+
+	const measurementId = getMeasurementId(import.meta.env.PUBLIC_GA_MEASUREMENT_ID);
+
+	afterNavigate(() => {
+		trackPageView();
+	});
+
+	onMount(() => {
+		return listenForLinkClicks(document);
+	});
 </script>
 
 {#if pageMeta}
 	<Seo meta={pageMeta} {structuredData} />
 {/if}
+<Analytics {measurementId} />
 
 <a class="skip-link" href="#main">Skip to content</a>
 <Header currentPath={page.url.pathname} />

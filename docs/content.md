@@ -20,6 +20,7 @@ Each module has a `.test.ts` beside it pinning the values that must not drift (r
 | `videos.ts` | `mostWatchedVideos` (dance page) and `featuredVideos` (home page) | `/dance/`, `/`, `VideoObject` JSON-LD |
 | `apps.ts` | App projects: pitch, stack, status, link | `/apps/`, home featured app, `SoftwareApplication` JSON-LD |
 | `resume.ts` | Resume entries | `/resume/` |
+| `privacyPolicy.ts` | Privacy page copy: what analytics collects, messages, Calendly and YouTube, opting out; the footer's Privacy link | `/privacy/`, footer |
 | `photos.ts` | Registered photos with `alt` and caption | Wherever `sitePhotos.<key>` is used |
 | `types.ts` | Shared types for all of the above | — |
 

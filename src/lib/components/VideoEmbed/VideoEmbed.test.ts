@@ -27,4 +27,15 @@ describe('VideoEmbed', () => {
 		expect(player?.getAttribute('src')).toMatch(/^https:\/\/www\.youtube-nocookie\.com\/embed\/efsA9uA58Ss/);
 		expect(player).toHaveAttribute('title');
 	});
+
+	it('records the play with the video id and title', async () => {
+		const gtag = vi.fn();
+		window.gtag = gtag;
+		render(VideoEmbed, { video });
+		await fireEvent.click(screen.getByRole('button'));
+		expect(gtag).toHaveBeenCalledWith('event', 'video_play', expect.objectContaining({
+			video_id: 'efsA9uA58Ss', video_title: video.title,
+		}));
+		delete window.gtag;
+	});
 });
